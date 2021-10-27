@@ -68,7 +68,7 @@ function aksesMenu($modul, $level)
     $ci = &get_instance();
     $query = $ci->db->query("SELECT id_menu FROM menu WHERE id_modul='$modul'")->num_rows();
     if ($query > 0) {
-        $aksi = '<a title="Akses Menu" href="' . base_url('config/aksesmenu/' . $modul . '/' . $level) . '" class="btn btn-xs btn-primary" ><i class="fa fa-info-circle"></i> Detail</a>';
+        $aksi = '<a title="Akses Menu" href="' . base_url('config/aksesmenu/' . $modul . '/' . $level) . '" class="btn btn-block btn-primary" ><i class="fa fa-info-circle"></i> Detail</a>';
     } else {
         $aksi = '';
     }

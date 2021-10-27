@@ -1,102 +1,76 @@
 <!DOCTYPE html>
-
 <html lang="en">
 
-
 <head>
-  <meta charset="utf-8" />
-  <title><?=$identitas['nama']?> | <?=$title?></title>
-  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
-  
-  <meta content="indosistem.com" name="author" />
-  
-  <!-- ================== BEGIN BASE CSS STYLE ================== -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
-  <link href="<?=base_url()?>assets/plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet" />
-  <link href="<?=base_url()?>assets/plugins/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="<?=base_url()?>assets/plugins/font-awesome/5.0/css/fontawesome-all.min.css" rel="stylesheet" />
-  <link href="<?=base_url()?>assets/plugins/animate/animate.min.css" rel="stylesheet" />
-  <link href="<?=base_url()?>assets/css/default/style.min.css" rel="stylesheet" />
-  <link href="<?=base_url()?>assets/css/default/style-responsive.min.css" rel="stylesheet" />
-  <link href="<?=base_url()?>assets/css/default/theme/default.css" rel="stylesheet" id="theme" />
-  <!-- ================== END BASE CSS STYLE ================== -->
-  
-  <!-- ================== BEGIN BASE JS ================== -->
-  <script src="<?=base_url()?>assets/plugins/pace/pace.min.js"></script>
-  <!-- ================== END BASE JS ================== -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AdminLTE 3 | Log in (v2)</title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="<?= base_url('assets/admin/') ?>plugins/fontawesome-free/css/all.min.css">
+    <!-- icheck bootstrap -->
+    <link rel="stylesheet" href="<?= base_url('assets/admin/') ?>plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="<?= base_url('assets/admin/') ?>dist/css/adminlte.min.css">
 </head>
-<body class="pace-top">
-  <!-- begin #page-loader -->
-  <div id="page-loader" class="fade show"><span class="spinner"></span></div>
-  <!-- end #page-loader -->
-  
-  <!-- begin #page-container -->
-  <div id="page-container" class="fade">
-      <!-- begin login -->
-        <div class="login bg-black animated fadeInDown">
-            <!-- begin brand -->
-            <div class="login-header">
-                <div class="brand">
-                    <span class="logo"></span> <b>Login</b> Admin
-                    <small><?=$identitas['nama']?></small>
-                </div>
-                <div class="icon">
-                    <i class="fa fa-lock"></i>
-                </div>
+
+<body class="hold-transition login-page">
+    <div class="login-box">
+        <!-- /.login-logo -->
+        <div class="card card-outline card-primary">
+            <div class="card-header text-center">
+                <a href="../../index2.html" class="h1"><b>Login</b> Admin</a>
             </div>
-            <!-- end brand -->
-            <!-- begin login-content -->
-            <div class="login-content">
-                <form action="<?=base_url('admin')?>" method="POST" class="margin-bottom-0">
-                    <input type="hidden" name="token" value="<?=$token?>">
-                    <div class="form-group m-b-20">
-                        <input type="text" name="username" class="form-control form-control-lg " placeholder="Username" required />
-                    </div>
-                    <div class="form-group m-b-20">
-                        <input type="password" name="password" class="form-control form-control-lg " placeholder="Password" required />
-                    </div>
-                     
-                    <div class="row row-space-10">
-                            <div class="col-md-6 m-b-20">
-                                <input type="text" class="form-control form-control-lg" value="<?=$captcha?>" placeholder="" readonly />
-                            </div>
-                            <div class="col-md-6 m-b-20">
-                                <input type="text" name="captcha" class="form-control form-control-lg" placeholder="Hasil" required />
+            <div class="card-body">
+                <!-- <p class="login-box-msg">Sign in to start your session</p> -->
+
+                <form action="<?= base_url('admin') ?>" method="POST" class="margin-bottom-0">
+                    <input type="hidden" name="token" value="<?= $token ?>">
+                    <div class="input-group mb-3">
+                        <input type="text" name="username" class="form-control" require placeholder="Username">
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-envelope"></span>
                             </div>
                         </div>
-                    
-                    <div class="login-buttons">
-                        <button type="submit" name="login" class="btn btn-success btn-block btn-lg">Login</button>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="password" name="password" class="form-control" placeholder="Password" require>
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <button type="submit" name="login" class="btn btn-primary btn-block">Login</button>
+                        </div>
+                        <!-- /.col -->
                     </div>
                 </form>
             </div>
-            <!-- end login-content -->
+            <!-- /.card-body -->
         </div>
-        <!-- end login -->
-        
-       
-  </div>
-  <!-- end page container -->
-  
-  <!-- ================== BEGIN BASE JS ================== -->
-  <script src="<?=base_url()?>assets/plugins/jquery/jquery-3.2.1.min.js"></script>
-  <script src="<?=base_url()?>assets/plugins/jquery-ui/jquery-ui.min.js"></script>
-  <script src="<?=base_url()?>assets/plugins/bootstrap/4.1.0/js/bootstrap.bundle.min.js"></script>
+        <!-- /.card -->
+    </div>
+    <!-- /.login-box -->
 
-  <script src="<?=base_url()?>assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-  <script src="<?=base_url()?>assets/plugins/js-cookie/js.cookie.js"></script>
-  <script src="<?=base_url()?>assets/js/theme/default.min.js"></script>
-  <script src="<?=base_url()?>assets/js/apps.min.js"></script>
-  <!-- ================== END BASE JS ================== -->
-  
-  <script>
-    $(document).ready(function() {
-      App.init();
-    });
-  </script>
+    <!-- jQuery -->
+    <script src="<?= base_url('assets/admin/') ?>plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="<?= base_url('assets/admin/') ?>plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="<?= base_url('assets/admin/') ?>dist/js/adminlte.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            App.init();
+        });
+    </script>
 
 </body>
 
-
 </html>
-

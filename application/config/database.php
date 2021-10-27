@@ -84,7 +84,8 @@ $db['default'] = array(
 	// Koneksi Database Lokal KOmputer
 	'username' => 'root',
 	'password' => '',
-	'database' => 'website_sekolah',
+	'database' => 'db_motor',
+	// 'database' => 'website_sekolah',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,

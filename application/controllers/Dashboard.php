@@ -25,21 +25,13 @@ class Dashboard extends CI_Controller
     function __construct()
     {
         parent::__construct(); // needed when adding a constructor to a controller
-        $this->load->model('model_layanan');
-        $this->load->helper('layanan_helper');
         $identitas = $this->model_app->edit('identitas', array('id' => 1))->row_array();
-        $notif = api('api/notifikasi', array("npsn" => $identitas['kode'], "uid" => $identitas['uid']));
-        if (isset($_POST['tahun'])) {
-            $this->session->set_userdata(array('tahun' => postnumber('tahun')));
-        }
         $this->data = array(
             'identitas' => $identitas,
             'id_level' => $this->session->level,
             'ctrl' => 'dashboard',
-            'notif' => $notif->jumlah,
-            'tahun' => $this->session->tahun,
             'header' => 'Selamat ' . waktuSekarang() . ' : ' . $this->session->nama_user,
-            'user' => $this->session->id_user
+
 
         );
     }
@@ -49,211 +41,10 @@ class Dashboard extends CI_Controller
         $data = $this->data;
         $data['link'] = 'dashboard/index';
         $data['title'] = 'Dashboard';
-        if (isset($_POST['prosessiswa'])) {
-            if (!empty($_FILES['gambar']['name'])) {
-                $dir = dirname($_FILES["gambar"]["tmp_name"]);
-                $destination = $dir . DIRECTORY_SEPARATOR . $_FILES["gambar"]["name"];
-                rename($_FILES["gambar"]["tmp_name"], $destination);
 
-                $upload = $this->s3_upload->upload_file($destination);
-                if ($upload != '') {
-                    $simpan = array(
-                        'id_tiket' => postnumber('id_tiket'),
-                        'pesan' => posttext('pesan'),
-                        'id_pengirim' => $data['user'],
-                        'pengirim' => 'Admin',
-                        'gambar' => $upload['uri'],
-                        'gambarkey' => $upload['key']
-                    );
-                    $this->model_app->insert('siswa_tiket_chat', $simpan);
-                    if ($this->db->affected_rows() > 0) {
-                        $this->model_app->update('siswa_tiket', array('status' => 1), array('id' => postnumber('id_tiket')));
-                        $this->session->set_flashdata('sukses', 'Open Tiket Berhasil Diproses');
-                    } else {
-                        $this->session->set_flashdata('gagal', 'Open Tiket Gagal Diproses');
-                    }
-                } else {
-                    $this->session->set_flashdata('gagal', 'Lampiran Gagal Di Upload');
-                }
-            } else {
-                $simpan = array(
-                    'id_tiket' => postnumber('id_tiket'),
-                    'pesan' => posttext('pesan'),
-                    'id_pengirim' => $data['user'],
-                    'pengirim' => 'Admin'
-                );
-                $this->model_app->insert('siswa_tiket_chat', $simpan);
-                if ($this->db->affected_rows() > 0) {
-                    $this->model_app->update('siswa_tiket', array('status' => 1), array('id' => postnumber('id_tiket')));
-                    $this->session->set_flashdata('sukses', 'Open Tiket Berhasil Diproses');
-                } else {
-                    $this->session->set_flashdata('gagal', 'Open Tiket Gagal Diproses');
-                }
-            }
-            redirect(current_url());
-        } else if (isset($_POST['selesaisiswa'])) {
-
-            $simpan = array(
-                'status' => 2,
-                'informasi' => posttext('informasi'),
-                'admin' => $data['user'],
-                'selesai_at' => date('Y-m-d H:i:s')
-            );
-            $this->model_app->update('siswa_tiket', $simpan, array('id' => postnumber('id_tiket')));
-            if ($this->db->affected_rows() > 0) {
-                $this->session->set_flashdata('sukses', 'Open Tiket Berhasil Ditutup');
-            } else {
-                $this->session->set_flashdata('gagal', 'Open Tiket Gagal Ditutup');
-            }
-
-            redirect(current_url());
-        } else if (isset($_POST['prosesguru'])) {
-            if (!empty($_FILES['gambar']['name'])) {
-                $dir = dirname($_FILES["gambar"]["tmp_name"]);
-                $destination = $dir . DIRECTORY_SEPARATOR . $_FILES["gambar"]["name"];
-                rename($_FILES["gambar"]["tmp_name"], $destination);
-
-                $upload = $this->s3_upload->upload_file($destination);
-                if ($upload != '') {
-                    $simpan = array(
-                        'id_tiket' => postnumber('id_tiket'),
-                        'pesan' => posttext('pesan'),
-                        'id_pengirim' => $data['user'],
-                        'pengirim' => 'Admin',
-                        'gambar' => $upload['uri'],
-                        'gambarkey' => $upload['key']
-                    );
-                    $this->model_app->insert('guru_tiket_chat', $simpan);
-                    if ($this->db->affected_rows() > 0) {
-                        $this->model_app->update('guru_tiket', array('status' => 1), array('id' => postnumber('id_tiket')));
-                        $this->session->set_flashdata('sukses', 'Open Tiket Berhasil Diproses');
-                    } else {
-                        $this->session->set_flashdata('gagal', 'Open Tiket Gagal Diproses');
-                    }
-                } else {
-                    $this->session->set_flashdata('gagal', 'Lampiran Gagal Di Upload');
-                }
-            } else {
-                $simpan = array(
-                    'id_tiket' => postnumber('id_tiket'),
-                    'pesan' => posttext('pesan'),
-                    'id_pengirim' => $data['user'],
-                    'pengirim' => 'Admin'
-                );
-                $this->model_app->insert('guru_tiket_chat', $simpan);
-                if ($this->db->affected_rows() > 0) {
-                    $this->model_app->update('guru_tiket', array('status' => 1), array('id' => postnumber('id_tiket')));
-                    $this->session->set_flashdata('sukses', 'Open Tiket Berhasil Diproses');
-                } else {
-                    $this->session->set_flashdata('gagal', 'Open Tiket Gagal Diproses');
-                }
-            }
-            redirect(current_url());
-        } else if (isset($_POST['selesaiguru'])) {
-
-            $simpan = array(
-                'status' => 2,
-                'informasi' => posttext('informasi'),
-                'admin' => $data['user'],
-                'selesai_at' => date('Y-m-d H:i:s')
-            );
-            $this->model_app->update('guru_tiket', $simpan, array('id' => postnumber('id_tiket')));
-            if ($this->db->affected_rows() > 0) {
-                $this->session->set_flashdata('sukses', 'Open Tiket Berhasil Ditutup');
-            } else {
-                $this->session->set_flashdata('gagal', 'Open Tiket Gagal Ditutup');
-            }
-
-            redirect(current_url());
-        } else {
-            $data['siswabaru'] = $this->model_layanan->tiket_siswa($data['tahun'], 0);
-            $data['siswaproses'] = $this->model_layanan->tiket_siswa($data['tahun'], 1);
-            $data['siswaselesai'] = $this->model_layanan->tiket_siswa($data['tahun'], 2);
-            $data['gurubaru'] = $this->model_layanan->tiket_guru($data['tahun'], 0);
-            $data['guruproses'] = $this->model_layanan->tiket_guru($data['tahun'], 1);
-            $data['guruselesai'] = $this->model_layanan->tiket_guru($data['tahun'], 2);
-            $cek = api('api/permintaan', array("npsn" => $data['identitas']['kode'], "uid" => $data['identitas']['uid']));
-            // $berita=api('api/beritadinas',array("npsn"=>$data['identitas']['kode'],"uid"=>$data['identitas']['uid'],'jumlah'=>'5',"halaman"=>"1","cari"=>""));
-            if ($cek->action == true) {
-                $data['permintaan'] = $cek->jumlah;
-                $data['isi'] = $cek->isi;
-                $data['hasil'] = $cek->hasil;
-                $data['belum'] = $data['permintaan'] - $data['isi'];
-                // $data['berita']=$berita->hasil;
-            }
-
-            $this->template->load('admin', 'admin/dashboard/data', $data);
-        }
+        $this->template->load('admin', 'admin/dashboard/data', $data);
     }
 
-    function indexdetail($seo, $jenis = 'siswa')
-    {
-        $data = $this->data;
-        $data['title'] = 'Detail Open Tiket ' . ucfirst($jenis);
-        $data['link'] = 'dashboard/index';
-        if ($jenis == 'siswa') {
-            $table = 'siswa_tiket';
-        } else {
-            $table = 'guru_tiket';
-        }
-        $where = array('id' => dekrip($seo));
-        $row = $this->model_app->edit($table, $where)->row_array();
-        if (isset($_POST['simpan'])) {
-            if (!empty($_FILES['gambar']['name'])) {
-                $dir = dirname($_FILES["gambar"]["tmp_name"]);
-                $destination = $dir . DIRECTORY_SEPARATOR . $_FILES["gambar"]["name"];
-                rename($_FILES["gambar"]["tmp_name"], $destination);
-
-                $upload = $this->s3_upload->upload_file($destination);
-                if ($upload != '') {
-                    if ($row['gambarkey'] != '') {
-                        $this->s3_upload->delete_file($row['gambarkey']);
-                    }
-                    $simpan = array(
-                        'id_tiket' => postnumber('id_tiket'),
-                        'pesan' => posttext('pesan'),
-                        'id_pengirim' => $data['user'],
-                        'pengirim' => 'Admin',
-                        'gambar' => $upload['uri'],
-                        'gambarkey' => $upload['key']
-                    );
-                    $this->model_app->insert($table . '_chat', $simpan);
-                    if ($this->db->affected_rows() > 0) {
-                        $this->session->set_flashdata('sukses', 'Pesan Berhasil Disimpan');
-                    } else {
-                        $this->session->set_flashdata('gagal', 'Pesan Gagal Disimpan');
-                    }
-                } else {
-                    $this->session->set_flashdata('gagal', 'File Gagal Di Upload');
-                }
-            } else {
-                $simpan = array(
-                    'id_tiket' => postnumber('id_tiket'),
-                    'pesan' => posttext('pesan'),
-                    'id_pengirim' => $data['user'],
-                    'pengirim' => 'Admin'
-                );
-                $this->model_app->insert($table . '_chat', $simpan);
-                if ($this->db->affected_rows() > 0) {
-                    $this->session->set_flashdata('sukses', $data['title'] . ' Berhasil Disimpan');
-                } else {
-                    $this->session->set_flashdata('gagal', $data['title'] . ' Gagal Disimpan');
-                }
-            }
-            redirect(current_url());
-        } else {
-            $data['rows'] = $row;
-            if ($jenis == 'siswa') {
-                $table = 'siswa_tiket';
-                $data['chat'] = $this->model_layanan->siswa_chat(dekrip($seo));
-                $this->template->load('admin', 'admin/dashboard/chat', $data);
-            } else {
-                $table = 'guru_tiket';
-                $data['chat'] = $this->model_layanan->guru_chat(dekrip($seo));
-                $this->template->load('admin', 'admin/dashboard/chatguru', $data);
-            }
-        }
-    }
 
     function profil()
     {

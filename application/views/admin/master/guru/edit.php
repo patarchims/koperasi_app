@@ -1,18 +1,18 @@
 <div class="panel panel-inverse">
   <div class="panel-heading">
     <div class="panel-heading-btn">
-      
+
     </div>
-    <h3 class="panel-title"><?=$title?></h3>
+    <h3 class="panel-title"><?= $title ?></h3>
   </div>
   <div class="panel-body">
-    <form class="form-horizontal" onsubmit="ShowLoading()" action="<?=base_url($link.'edit')?>" method="post" enctype="multipart/form-data" accept-charset="utf-8">
-      <input type="hidden" name="id" value="<?=$rows['id_guru']?>">
+    <form class="form-horizontal" onsubmit="ShowLoading()" action="<?= base_url($link . 'edit') ?>" method="post" enctype="multipart/form-data" accept-charset="utf-8">
+      <input type="hidden" name="id" value="<?= $rows['id_guru'] ?>">
       <div class="form-group row">
         <label class="control-label col-md-2">Jenis SDM</label>
         <div class="col-md-10">
           <select name="jenis" class="form-control" required>
-            <?=opEnum('guru','jenis',$rows['jenis'])?>
+            <?= opEnum('guru', 'jenis', $rows['jenis']) ?>
           </select>
         </div>
       </div>
@@ -20,14 +20,14 @@
       <div class="form-group row">
         <label class="control-label col-md-2">Nama Lengkap</label>
         <div class="col-md-10">
-          <?=formInputText('nama',stripcslashes($rows['nama']),'Nama Lengkap','required')?>
+          <?= formInputText('nama', stripcslashes($rows['nama']), 'Nama Lengkap', 'required') ?>
         </div>
       </div>
 
       <div class="form-group row">
         <label class="control-label col-md-2">NIP</label>
         <div class="col-md-10">
-          <?=formInputText('nip',$rows['nip'],'NIP','')?>
+          <?= formInputText('nip', $rows['nip'], 'NIP', '') ?>
         </div>
       </div>
 
@@ -35,7 +35,7 @@
         <label class="control-label col-md-2">Jenis Kelamin</label>
         <div class="col-md-10">
           <select name="jk" class="form-control" required>
-            <?=opKodeApp('KELAMIN',$rows['jk'])?>
+            <?= opKodeApp('KELAMIN', $rows['jk']) ?>
           </select>
         </div>
       </div>
@@ -44,7 +44,7 @@
         <label class="control-label col-md-2">Agama</label>
         <div class="col-md-10">
           <select name="agama" class="form-control" required>
-            <?=opKodeApp('AGAMA',$rows['agama'])?>
+            <?= opKodeApp('AGAMA', $rows['agama']) ?>
           </select>
         </div>
       </div>
@@ -52,21 +52,21 @@
       <div class="form-group row">
         <label class="control-label col-md-2">Alamat</label>
         <div class="col-md-10">
-          <?=formInputText('alamat',stripcslashes($rows['alamat']),'Alamat Rumah','')?>
+          <?= formInputText('alamat', stripcslashes($rows['alamat']), 'Alamat Rumah', '') ?>
         </div>
       </div>
 
       <div class="form-group row">
         <label class="control-label col-md-2">Email</label>
         <div class="col-md-10">
-          <?=formInputEmail('email',$rows['email'],'Alamat Email','required')?>
+          <?= formInputEmail('email', $rows['email'], 'Alamat Email', 'required') ?>
         </div>
       </div>
 
       <div class="form-group row">
         <label class="control-label col-md-2">NO. HP</label>
         <div class="col-md-10">
-          <?=formInputText('hp',$rows['hp'],'No. Handphone','required')?>
+          <?= formInputText('hp', $rows['hp'], 'No. Handphone', 'required') ?>
         </div>
       </div>
 
@@ -74,7 +74,7 @@
         <label class="control-label col-md-2">Jabatan</label>
         <div class="col-md-10">
           <select name="jabatan" class="form-control" required>
-            <?=opJabatan($rows['id_jabatan'])?>
+            <?= opJabatan($rows['id_jabatan']) ?>
           </select>
         </div>
       </div>
@@ -83,7 +83,7 @@
         <label class="control-label col-md-2">Golongan/ Pangkat</label>
         <div class="col-md-10">
           <select name="gol" class="form-control" required>
-            <?=opKodeApp('GOL',$rows['gol'])?>
+            <?= opKodeApp('GOL', $rows['gol']) ?>
           </select>
         </div>
       </div>
@@ -92,7 +92,7 @@
         <label class="control-label col-md-2">Status Pegawai</label>
         <div class="col-md-10">
           <select name="status" class="form-control" required>
-            <?=opKodeApp('STSPEG',$rows['status'])?>
+            <?= opKodeApp('STSPEG', $rows['status']) ?>
           </select>
         </div>
       </div>
@@ -101,7 +101,7 @@
         <label class="control-label col-md-2">Pendidikan Terakhir</label>
         <div class="col-md-10">
           <select name="pendidikan" class="form-control" required>
-            <?=opKodeApp('PENDIDIKAN',$rows['pendidikan'])?>
+            <?= opKodeApp('PENDIDIKAN', $rows['pendidikan']) ?>
           </select>
         </div>
       </div>
@@ -109,21 +109,21 @@
       <div class="form-group row">
         <label class="control-label col-md-2">Alumni Dari</label>
         <div class="col-md-10">
-          <?=formInputText('alumni',stripcslashes($rows['alumni']),'Instansi Pendikan Terakhir','')?>
+          <?= formInputText('alumni', stripcslashes($rows['alumni']), 'Instansi Pendikan Terakhir', '') ?>
         </div>
       </div>
 
       <div class="form-group row">
         <label class="control-label col-md-2">Foto Sebelumnya</label>
         <div class="col-md-10">
-          <img src="<?=gambar('guru',$rows['gambar'])?>" width="150" alt="">
+          <img src="<?= gambar('guru', $rows['gambar']) ?>" width="150" alt="">
         </div>
       </div>
 
       <div class="form-group row">
         <label class="control-label col-md-2">Foto</label>
         <div class="col-md-10">
-          <?=formInputGambar('gambar','')?>
+          <?= formInputGambar('gambar', '') ?>
           <small>Kosongkan Jika Tidak Mengganti Foto, Ukuran Maksimal 500Kb</small>
         </div>
       </div>
@@ -132,12 +132,11 @@
         <label class="control-label col-md-2"></label>
         <div class="col-md-10">
           <button class="btn btn-success" id="btnSimpan" name="simpan" type="submit"> Simpan</button>
-          <a class="btn btn-danger" href="<?=base_url($link)?>" type="button">Cancel</a>
+          <a class="btn btn-danger" href="<?= base_url($link) ?>" type="button">Cancel</a>
         </div>
       </div>
 
-    </form>   
+    </form>
   </div>
   <!-- /.panel-body -->
 </div>
-
