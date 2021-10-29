@@ -7,6 +7,7 @@
     <title><?= $identitas['nama'] ?></title>
 
     <!-- Google Font: Source Sans Pro -->
+    <link href="<?= base_url() ?>assets/plugins/select2/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="<?= base_url('assets/admin/') ?>plugins/fontawesome-free/css/all.min.css">
@@ -19,6 +20,7 @@
     <script src="<?= base_url() ?>assets/plugins/jquery/jquery-3.2.1.min.js"></script>
     <script src="<?= base_url() ?>assets/plugins/jquery-ui/jquery-ui.min.js"></script>
     <script src="<?= base_url() ?>assets/plugins/bootstrap/4.1.0/js/bootstrap.bundle.min.js"></script>
+
 </head>
 
 <body class="hold-transition  sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
@@ -288,6 +290,8 @@
     <script src="<?= base_url('assets/admin/') ?>plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="<?= base_url('assets/admin/') ?>plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
     <script src="<?= base_url() ?>assets/plugins/bootstrap-sweetalert/sweetalert.min.js"></script>
+    <script src="<?= base_url() ?>assets/plugins/select2/dist/js/select2.min.js"></script>
+
 
 
     <!-- overlayScrollbars -->
@@ -304,35 +308,35 @@
     <!-- ChartJS -->
     <script src="<?= base_url('assets/admin/') ?>plugins/chart.js/Chart.min.js"></script>
 
-    <script src="<?= base_url('assets/admin/') ?>dist/js/demo.js"></script>
-    <script src="<?= base_url('assets/admin/') ?>dist/js/pages/dashboard2.js"></script>
+    <!-- <script src="<?= base_url('assets/admin/') ?>dist/js/demo.js"></script>
+    <script src="<?= base_url('assets/admin/') ?>dist/js/pages/dashboard2.js"></script> -->
 
 
 
     <script>
         $(document).ready(function() {
-            App.init();
-            $("#data-table").DataTable();
+            // App.init();
+            // $("#data-table").DataTable();
 
-            webshims.setOptions('forms-ext', {
-                replaceUI: 'auto',
-                types: 'number',
-                widgets: {
-                    startView: 2,
-                    openOnMouseFocus: true,
-                    stepfactor: 1
-                }
-            });
-            webshims.polyfill('forms forms-ext');
-            CKFinder.setupCKEditor();
+            // webshims.setOptions('forms-ext', {
+            //     replaceUI: 'auto',
+            //     types: 'number',
+            //     widgets: {
+            //         startView: 2,
+            //         openOnMouseFocus: true,
+            //         stepfactor: 1
+            //     }
+            // });
+            // webshims.polyfill('forms forms-ext');
+            // CKFinder.setupCKEditor();
 
-            $('textarea.mytextarea').ckeditor();
-            $(document).on('click', '[data-toggle="lightbox"]', function(event) {
-                event.preventDefault();
-                $(this).ekkoLightbox({
-                    alwaysShowClose: true,
-                });
-            });
+            // $('textarea.mytextarea').ckeditor();
+            // $(document).on('click', '[data-toggle="lightbox"]', function(event) {
+            //     event.preventDefault();
+            //     $(this).ekkoLightbox({
+            //         alwaysShowClose: true,
+            //     });
+            // });
 
 
         });

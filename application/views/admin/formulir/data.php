@@ -38,11 +38,11 @@
                   <thead>
                     <tr>
                       <th>No</th>
-                      <th>Nomor Anggota</th>
-                      <th>Nama</th>
-                      <th>Jenis Kelamin</th>
-                      <th>email</th>
-                      <th>Pekerjaan</th>
+                      <th>Nomor FPP</th>
+                      <th>Tanggal Permohonan</th>
+                      <th>Jumlah Permohonan</th>
+                      <th>Nama Anggota</th>
+                      <th>ID Anggota</th>
                       <th>Aksi</th>
                     </tr>
                   </thead>

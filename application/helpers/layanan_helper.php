@@ -36,17 +36,6 @@ function opSiswa($p = '')
     return $opsi;
 }
 
-function opPelaksana($idlayanan)
-{
-    $ci = &get_instance();
-    $opsi = '';
-    $query = $ci->db->query("SELECT a.id_guru, a.nama, b.jabatan  FROM guru as a LEFT JOIN jabatan as b on a.id_jabatan=b.id_jabatan WHERE a.id_guru NOT IN (SELECT id_ptk FROM layanan_01_peserta WHERE id_layanan='$idlayanan') ORDER BY b.urutan asc ");
-    foreach ($query->result_array() as $r) {
-
-        $opsi .= '<option value="' . $r['id_guru'] . '">' . stripslashes($r['nama']) . ' - ' . $r['jabatan'] . '</option>';
-    }
-    return $opsi;
-}
 
 function opGajiBerkala($idlayanan)
 {

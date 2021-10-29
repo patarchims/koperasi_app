@@ -43,11 +43,10 @@
                     <?= formInputText('nama_anggota', stripcslashes($rows['nama_anggota']), 'Nama Anggota', 'required') ?>
                   </div>
 
+
                   <div class="form-group ">
-                    <label class="control-label ">Jenis Kelamin</label>
-                    <select name="jenis_kelamin" class="form-control" required>
-                      <?= opKodeApp('tb_anggota', $rows['jenis_kelamin']) ?>
-                    </select>
+                    <label class="control-label ">Jenis Kelamin</label> <br>
+                    <?= opEnumRadio('tb_anggota', 'jenis_kelamin', $rows['jenis_kelamin']) ?>
                   </div>
 
                   <div class="form-group">

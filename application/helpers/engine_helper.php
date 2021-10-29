@@ -224,6 +224,20 @@ function opKodeApp($p, $q = '')
 }
 
 
+function opAnggota($p = '')
+{
+    $ci = &get_instance();
+    $opsi = '';
+    $query = $ci->db->query("SELECT a.id_anggota, a.nama_anggota, a.no_anggota FROM tb_anggota as a ORDER BY a.id_anggota asc");
+    foreach ($query->result_array() as $r) {
+        $cl = ($r['id_anggota'] == $p) ? 'selected' : '';
+        $opsi .= '<option value="' . $r['id_anggota'] . '" ' . $cl . '>' . stripslashes($r['no_anggota']) . ' - ' . stripslashes($r['nama_anggota']) . '</option>';
+    }
+    return $opsi;
+}
+
+
+
 
 function opJabatan($p = '')
 {

@@ -41,11 +41,11 @@
                     <?= formInputText('nama_anggota', '', 'Nama Anggota', 'required') ?>
                   </div>
 
+
+
                   <div class="form-group ">
-                    <label class="control-label ">Jenis Kelamin</label>
-                    <select name="jenis_kelamin" class="form-control" required>
-                      <?= opEnum('tb_anggota', 'jenis_kelamin', '') ?>
-                    </select>
+                    <label class="control-label ">Jenis Kelamin</label> <br>
+                    <?= opEnumRadio('tb_anggota', 'jenis_kelamin', '') ?>
                   </div>
 
                   <div class="form-group">
@@ -56,53 +56,53 @@
                   <div class="form-group">
                     <label class="control-label ">Tanggal Lahir</label>
                     <?= formInputDate('tgl_lahir', '', 'Tanggal Lahir', '') ?>
-                    </tiv>
+                  </div>
 
 
 
-                    <div class="form-group">
-                      <label class="control-label">Alamat</label>
-                      <?= formInputText('alamat', '', 'Alamat', 'required') ?>
-                    </div>
+                  <div class="form-group">
+                    <label class="control-label">Alamat</label>
+                    <?= formInputText('alamat', '', 'Alamat', 'required') ?>
+                  </div>
 
-                    <div class="form-group">
-                      <label class="control-label">Pekerjaan</label>
-                      <?= formInputText('pekerjaan', '', 'Pekerjaan', 'required') ?>
-                    </div>
+                  <div class="form-group">
+                    <label class="control-label">Pekerjaan</label>
+                    <?= formInputText('pekerjaan', '', 'Pekerjaan', 'required') ?>
+                  </div>
 
-                    <div class="form-group">
-                      <label class="control-label">Agama</label>
-                      <select name="agama" class="form-control" required>
-                        <?= opKodeApp('AGAMA', '') ?>
-                      </select>
-                    </div>
+                  <div class="form-group">
+                    <label class="control-label">Agama</label>
+                    <select name="agama" class="form-control" required>
+                      <?= opKodeApp('AGAMA', '') ?>
+                    </select>
+                  </div>
 
-                    <div class="form-group">
-                      <label class="control-label">Email</label>
-                      <?= formInputText('email', '', 'Email', 'required') ?>
-                    </div>
+                  <div class="form-group">
+                    <label class="control-label">Email</label>
+                    <?= formInputText('email', '', 'Email', 'required') ?>
+                  </div>
 
-                    <div class="form-group">
-                      <label class="control-label">Telp</label>
-                      <?= formInputNumber('telp', '', 'Telp', 'required') ?>
-                    </div>
+                  <div class="form-group">
+                    <label class="control-label">Telp</label>
+                    <?= formInputNumber('telp', '', 'Telp', 'required') ?>
+                  </div>
 
-                    <div class="form-group">
-                      <label class="control-label">No Identitas</label>
-                      <?= formInputNumber('no_identitas', '', 'No Identitas', 'required') ?>
-                    </div>
-
-
-                    <div class="form-group">
-                      <label class="control-label ">Tanggal Daftar</label>
-                      <?= formInputDate('tgl_daftar', '', 'Tanggal Daftar', '') ?>
-                    </div>
+                  <div class="form-group">
+                    <label class="control-label">No Identitas</label>
+                    <?= formInputNumber('no_identitas', '', 'No Identitas', 'required') ?>
+                  </div>
 
 
-                    <div class="card-footer">
-                      <button type="submit" id="btnSimpan" name="simpan" type="submit" class="btn btn-primary">Simpan</button>
-                      <a class="btn btn-danger" href="<?= base_url($link) ?>" type="button">Cancel</a>
-                    </div>
+                  <div class="form-group">
+                    <label class="control-label ">Tanggal Daftar</label>
+                    <?= formInputDate('tgl_daftar', '', 'Tanggal Daftar', '') ?>
+                  </div>
+
+
+                  <div class="card-footer">
+                    <button type="submit" id="btnSimpan" name="simpan" type="submit" class="btn btn-primary">Simpan</button>
+                    <a class="btn btn-danger" href="<?= base_url($link) ?>" type="button">Cancel</a>
+                  </div>
               </form>
             </div>
             <!-- /.card -->

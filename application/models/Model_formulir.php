@@ -1,13 +1,12 @@
 <?php
 
-class Model_layanan07 extends CI_Model
+class Model_formulir extends CI_Model
 {
 
-    var $table = 'layanan_07 as a'; //nama tabel dari database
-    var $table1 = 'layanan_penandatangan as b'; //nama tabel dari database
-    var $column_order = array(null, 'a.nomor', 'a.tanggal', 'a.nama', 'a.npm', 'a.prodi', 'b.nama', null, null); //field yang ada di table user
-    var $column_search = array('a.nomor', 'a.tanggal', 'a.nama', 'a.npm', 'a.prodi', 'b.nama'); //field yang diizin untuk pencarian 
-    var $order = array('a.tanggal' => 'desc'); // default order 
+    var $table = 'view_formulir_pp'; //nama tabel dari database
+    var $column_order = array(null, null, 'no_fpp', 'tgl_permohonan', 'no_anggota', 'nama_anggota', null); //field yang ada di table user
+    var $column_search = array('no_fpp', 'nama_anggota', 'tgl_permohonan'); //field yang diizin untuk pencarian 
+    var $order = array('id_fpp' => 'desc'); // default order 
 
     public function __construct()
     {
@@ -17,9 +16,8 @@ class Model_layanan07 extends CI_Model
 
     private function _get_datatables_query($where = '')
     {
-        $this->db->select('a.*,b.nama as pnama,b.nip as pnip, b.pangkat as ppangkat');
+
         $this->db->from($this->table);
-        $this->db->join($this->table1, 'a.penandatangan=b.id');
         if ($where != '') {
             $this->db->where($where);
         }
@@ -70,9 +68,7 @@ class Model_layanan07 extends CI_Model
 
     public function count_all($where = '')
     {
-        $this->db->select('a.id');
         $this->db->from($this->table);
-        $this->db->join($this->table1, 'a.penandatangan=b.id');
         if ($where != '') {
             $this->db->where($where);
         }

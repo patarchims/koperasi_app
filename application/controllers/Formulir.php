@@ -47,4 +47,140 @@ class Formulir extends CI_Controller
             redirect('dashboard');
         }
     }
+
+
+
+    function get_formulir()
+    {
+        $data = $this->data;
+        $this->load->model('model_formulir');
+        $data['link'] = 'formulir/data';
+        $where = array();
+
+
+        $list = $this->model_formulir->get_datatables($where);
+        $no = $_POST['start'];
+        $record = array();
+        foreach ($list as $field) {
+
+
+
+            $edit = '';
+            if (bisaUbah($data['link'], $data['id_level'])) {
+                $edit = aksiEdit($data['link'] . 'edit', enkrip($field->id_fpp), '');
+            }
+
+            $hapus = '';
+            if (bisaHapus($data['link'], $data['id_level'])) {
+                $hapus = aksiHapusSwal($data['link'] . 'hapus', enkrip($field->id_fpp), '');
+            }
+            $detail = aksiDetail($data['link'] . 'detail', enkrip($field->id_fpp), '');
+
+
+            $no++;
+            $row = array();
+            $row[] = $no;
+            $row[] = $field->no_fpp;
+            $row[] = $field->tgl_permohonan;
+            $row[] = $field->jlh_permohonan;
+            $row[] = $field->nama_anggota;
+            $row[] = $field->no_anggota;
+
+            $row[] = $detail . '&nbsp;' . $edit . '&nbsp;' . $hapus;
+            $record[] = $row;
+        }
+
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->model_formulir->count_all($where),
+            "recordsFiltered" => $this->model_formulir->count_filtered($where),
+            "data" => $record,
+        );
+        //output dalam format JSON
+        echo json_encode($output);
+    }
+
+    function datahapus($seo)
+    {
+        $data = $this->data;
+        $data['title'] = 'Data Anggota';
+        $data['link'] = 'formulir/data';
+
+        if (bisaHapus($data['link'], $data['id_level'])) {
+            $hapus = $this->model_app->delete('tb_formulir_pp', array('id_fpp' => dekrip($seo)));
+            if ($this->db->affected_rows() > 0) {
+                $hasil = array('hasil' => 'sukses', 'pesan' => 'Data Formulir PP Berhasil Dihapus');
+            } else {
+                $hasil = array('hasil' => 'gagal', 'pesan' => 'Data Formulir PP Gagal Dihapus');
+            }
+            echo json_encode($hasil);
+        } else {
+            redirect('dashboard');
+        }
+    }
+
+    function datatambah()
+    {
+        $data = $this->data;
+        $data['title'] = 'Form Tambah Data Formulir Permohonan Pinjaman';
+        $data['link'] = 'formulir/data';
+        $data['subTitle'] = 'Data Formulir Permohonan Pinjaman';
+
+        if (bisaTulis($data['link'], $data['id_level'])) {
+            if (isset($_POST['simpan'])) {
+                $nama = posttext('nama_anggota');
+                $simpan = array(
+                    'id_fpp' => postnumber('id_fpp'),
+                    'no_fpp' => posttext('no_fpp'),
+                    'tgl_permohonan' => postnumber('tgl_permohonan'),
+                    'jlh_permohonan' => postnumber('jlh_permohonan'),
+                    'id_anggota' => postnumber('id_anggota')
+                );
+                if ($this->model_app->insert('tb_formulir_pp', $simpan)) {
+                    $this->session->set_flashdata('sukses', 'Data Formulir Permohonan Pinjaman Berhasil Berhasil Disimpan');
+                } else {
+                    $this->session->set_flashdata('gagal', 'Data Formulir Permohonan Pinjaman Gagal Disimpan');
+                }
+                redirect($data['link']);
+            } else {
+                $this->template->load('admin', 'admin/formulir/tambah', $data);
+            }
+        } else {
+            redirect('dashboard');
+        }
+    }
+
+    function dataedit($seo = '')
+    {
+        $data = $this->data;
+        $data['title'] = 'Form Edit Data Formulir Permintaan Pinjaman';
+        $data['subTitle'] = 'Data Formulir Permohonan Pinjaman';
+        $data['link'] = 'formulir/data';
+
+        if (bisaTulis($data['link'], $data['id_level'])) {
+            if (isset($_POST['simpan'])) {
+                $where = array('id_fpp' => postnumber('id'));
+                $nama = posttext('nama_anggota');
+                $simpan = array(
+                    'id_fpp' => postnumber('id_fpp'),
+                    'no_fpp' => posttext('no_fpp'),
+                    'tgl_permohonan' => postnumber('tgl_permohonan'),
+                    'jlh_permohonan' => postnumber('jlh_permohonan'),
+                    'id_anggota' => postnumber('id_anggota')
+                );
+                if ($this->model_app->update('tb_formulir_pp', $simpan, $where)) {
+
+                    $this->session->set_flashdata('sukses', 'Data Anggota Berhasil Disimpan');
+                } else {
+                    $this->session->set_flashdata('gagal', 'Data Anggota Gagal Disimpan');
+                }
+                redirect($data['link']);
+            } else {
+                $data['rows'] = $this->model_app->edit('tb_formulir_pp', array('id_fpp' => dekrip($seo)))->row_array();
+                $this->template->load('admin', 'admin/formulir/edit', $data);
+            }
+        } else {
+            redirect('dashboard');
+        }
+    }
 }
