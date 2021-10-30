@@ -6,6 +6,26 @@ function identitas($p)
     return $bg[$p];
 }
 
+function statusAnggota($id)
+{
+    $ci = &get_instance();
+    $db =  $ci->db->query("SELECT status FROM tb_pinjaman WHERE id_anggota=$id ORDER BY id_pinjaman DESC")->row_array();
+    if (!$db) {
+        return '';
+    } else {
+        return $db['status'];
+    }
+}
+
+function idPinjaman($id)
+{
+    $ci = &get_instance();
+    $db =  $ci->db->query("SELECT id_pinjaman FROM tb_pinjaman WHERE id_anggota=$id ORDER BY id_pinjaman DESC")->row_array();
+    return $db['id_pinjaman'];
+}
+
+
+
 function api($method, $data)
 {
     $ci = &get_instance();
@@ -251,11 +271,10 @@ function opJabatan($p = '')
     return $opsi;
 }
 
-function viewJabatan($p)
+function viewPinjaman($p)
 {
     $ci = &get_instance();
-    $fav = $ci->db->query("SELECT jabatan FROM jabatan WHERE id_jabatan='$p'")->row_array();
-    return $fav['jabatan'];
+    return $fav = $ci->db->query("SELECT * FROM view_pinjaman WHERE id_pinjaman='$p'")->row_array();
 }
 
 function viewKelas($id)
