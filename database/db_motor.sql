@@ -67,7 +67,7 @@ CREATE TABLE IF NOT EXISTS `level` (
   `nama_level` varchar(100) DEFAULT NULL,
   `created_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_level`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- Data exporting was unselected.
 
@@ -80,7 +80,7 @@ CREATE TABLE IF NOT EXISTS `menu` (
   `link` varchar(200) NOT NULL,
   `urutan` int(11) NOT NULL,
   PRIMARY KEY (`id_menu`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- Data exporting was unselected.
 
@@ -97,7 +97,7 @@ CREATE TABLE IF NOT EXISTS `menu_akses` (
   UNIQUE KEY `level_menu` (`id_level`,`id_menu`) USING BTREE,
   KEY `fk_menu_akses` (`id_menu`) USING BTREE,
   CONSTRAINT `fk_menu_akses` FOREIGN KEY (`id_menu`) REFERENCES `menu` (`id_menu`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=123 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=127 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- Data exporting was unselected.
 
@@ -111,7 +111,7 @@ CREATE TABLE IF NOT EXISTS `modul` (
   `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
   `modify_at` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_modul`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- Data exporting was unselected.
 
@@ -124,7 +124,7 @@ CREATE TABLE IF NOT EXISTS `modul_akses` (
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `level` (`id_modul`,`id_level`) USING BTREE,
   CONSTRAINT `fk_modul_akses` FOREIGN KEY (`id_modul`) REFERENCES `modul` (`id_modul`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- Data exporting was unselected.
 
@@ -136,7 +136,7 @@ CREATE TABLE IF NOT EXISTS `tbrefa` (
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `k1_tbrefa_ref` (`referensi`) USING BTREE,
   UNIQUE KEY `idxref` (`idxref`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- Data exporting was unselected.
 
@@ -152,7 +152,7 @@ CREATE TABLE IF NOT EXISTS `tbrefb` (
   `stsrek` enum('Aktif','Tidak') DEFAULT 'Aktif',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `k1_tbrefb_idxref` (`idxref`,`kderef`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- Data exporting was unselected.
 
@@ -172,7 +172,22 @@ CREATE TABLE IF NOT EXISTS `tb_anggota` (
   `no_identitas` int(11) DEFAULT NULL,
   `tgl_daftar` date DEFAULT NULL,
   PRIMARY KEY (`id_anggota`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+-- Data exporting was unselected.
+
+-- Dumping structure for table db_motor.tb_angsuran
+CREATE TABLE IF NOT EXISTS `tb_angsuran` (
+  `id_angsuran` int(11) NOT NULL AUTO_INCREMENT,
+  `no_pinjaman` varchar(50) DEFAULT NULL,
+  `no_angsuran` varchar(50) DEFAULT NULL,
+  `id_anggota` int(11) DEFAULT NULL,
+  `denda` int(11) DEFAULT NULL,
+  `angsuran_ke` int(11) DEFAULT NULL,
+  `keterangan` varchar(225) DEFAULT NULL,
+  `tanggal` date DEFAULT NULL,
+  PRIMARY KEY (`id_angsuran`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 -- Data exporting was unselected.
 
@@ -184,7 +199,29 @@ CREATE TABLE IF NOT EXISTS `tb_formulir_pp` (
   `jlh_permohonan` int(11) DEFAULT NULL,
   `id_anggota` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_fpp`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+
+-- Data exporting was unselected.
+
+-- Dumping structure for table db_motor.tb_pinjaman
+CREATE TABLE IF NOT EXISTS `tb_pinjaman` (
+  `id_pinjaman` int(11) NOT NULL AUTO_INCREMENT,
+  `id_anggota` int(11) NOT NULL,
+  `no_pinjaman` varchar(100) DEFAULT NULL,
+  `jlh_pinjam` int(11) NOT NULL DEFAULT '0',
+  `bunga` int(11) NOT NULL DEFAULT '0',
+  `tenor` int(11) NOT NULL DEFAULT '0',
+  `administrasi` int(11) NOT NULL DEFAULT '0',
+  `keterangan` varchar(255) DEFAULT NULL,
+  `tgl_pinjam` date DEFAULT NULL,
+  `tgl_tempo` int(11) DEFAULT NULL,
+  `status` enum('Open','Lunas') DEFAULT NULL,
+  `angsuran` int(11) DEFAULT NULL,
+  `total` int(11) DEFAULT NULL,
+  `sisa_tenor` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id_pinjaman`),
+  UNIQUE KEY `no_pinjaman` (`no_pinjaman`)
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=latin1;
 
 -- Data exporting was unselected.
 
@@ -206,9 +243,21 @@ CREATE TABLE IF NOT EXISTS `user` (
   UNIQUE KEY `username` (`username`,`email`) USING BTREE,
   KEY `fk_level` (`level`) USING BTREE,
   CONSTRAINT `fk_level` FOREIGN KEY (`level`) REFERENCES `level` (`id_level`) ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- Data exporting was unselected.
+
+-- Dumping structure for view db_motor.view_formulir_pp
+-- Creating temporary table to overcome VIEW dependency errors
+CREATE TABLE `view_formulir_pp` (
+	`id_fpp` INT(11) NOT NULL,
+	`no_fpp` INT(11) NULL,
+	`tgl_permohonan` DATE NULL,
+	`jlh_permohonan` INT(11) NULL,
+	`id_anggota` INT(11) NULL,
+	`nama_anggota` VARCHAR(255) NOT NULL COLLATE 'latin1_swedish_ci',
+	`no_anggota` INT(11) NOT NULL
+) ENGINE=MyISAM;
 
 -- Dumping structure for view db_motor.view_menu
 -- Creating temporary table to overcome VIEW dependency errors
@@ -240,6 +289,32 @@ CREATE TABLE `view_modul` (
 	`id` INT(11) NOT NULL
 ) ENGINE=MyISAM;
 
+-- Dumping structure for view db_motor.view_pinjaman
+-- Creating temporary table to overcome VIEW dependency errors
+CREATE TABLE `view_pinjaman` (
+	`id_pinjaman` INT(11) NOT NULL,
+	`id_anggota` INT(11) NOT NULL,
+	`no_pinjaman` VARCHAR(100) NULL COLLATE 'latin1_swedish_ci',
+	`jlh_pinjam` INT(11) NOT NULL,
+	`bunga` INT(11) NOT NULL,
+	`tenor` INT(11) NOT NULL,
+	`administrasi` INT(11) NOT NULL,
+	`keterangan` VARCHAR(255) NULL COLLATE 'latin1_swedish_ci',
+	`tgl_pinjam` DATE NULL,
+	`tgl_tempo` INT(11) NULL,
+	`status` ENUM('Open','Lunas') NULL COLLATE 'latin1_swedish_ci',
+	`angsuran` INT(11) NULL,
+	`total` INT(11) NULL,
+	`nama_anggota` VARCHAR(255) NOT NULL COLLATE 'latin1_swedish_ci'
+) ENGINE=MyISAM;
+
+-- Dumping structure for view db_motor.view_formulir_pp
+-- Removing temporary table and create final VIEW structure
+DROP TABLE IF EXISTS `view_formulir_pp`;
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `view_formulir_pp` AS SELECT tb_formulir_pp.*, tb_anggota.nama_anggota, tb_anggota.no_anggota 
+FROM tb_formulir_pp 
+INNER JOIN tb_anggota ON tb_formulir_pp.id_anggota = tb_anggota.id_anggota ;
+
 -- Dumping structure for view db_motor.view_menu
 -- Removing temporary table and create final VIEW structure
 DROP TABLE IF EXISTS `view_menu`;
@@ -249,6 +324,14 @@ CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `view_menu` AS SELECT `a`.`
 -- Removing temporary table and create final VIEW structure
 DROP TABLE IF EXISTS `view_modul`;
 CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `view_modul` AS SELECT `a`.`id_modul` AS `id_modul`, `a`.`nama_modul` AS `nama_modul`, `a`.`controller` AS `controller`, `a`.`urutan` AS `urutan`, `a`.`icon` AS `icon`, `b`.`id_level` AS `id_level`, `b`.`baca` AS `baca`, `b`.`id` AS `id` FROM (`modul` `a` join `modul_akses` `b` on(`a`.`id_modul` = `b`.`id_modul`)) ;
+
+-- Dumping structure for view db_motor.view_pinjaman
+-- Removing temporary table and create final VIEW structure
+DROP TABLE IF EXISTS `view_pinjaman`;
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `view_pinjaman` AS SELECT tb_pinjaman.*, tb_anggota.nama_anggota
+FROM tb_pinjaman
+INNER JOIN tb_anggota
+ON tb_anggota.id_anggota = tb_pinjaman.id_anggota ;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
 /*!40014 SET FOREIGN_KEY_CHECKS=IFNULL(@OLD_FOREIGN_KEY_CHECKS, 1) */;
