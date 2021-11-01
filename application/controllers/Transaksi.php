@@ -200,6 +200,9 @@ class Transaksi extends CI_Controller
             // die;
 
             if ($data['result']['status'] == 'Open') {
+                $data['angsuran_ke'] = hitungAngsuran($data['result']['no_pinjaman']);
+                $data['denda'] =  hitungDenda($data['result']['tgl_pinjam'], $data['result']['angsuran']);
+                $data['total_bayar'] = $data['denda'] + $data['result']['angsuran'];
                 $this->template->load('admin', 'admin/transaksi/angsuran/angsuran-bayar', $data);
             } elseif ($data['result']['status']  == 'Lunas') {
                 $this->template->load('admin', 'admin/transaksi/angsuran/angsuran-infolunas', $data);
@@ -208,31 +211,36 @@ class Transaksi extends CI_Controller
             }
         } elseif (isset($_POST['bayar'])) {
             $anggota = postnumber('id_anggota');
-            $tglPinjam = postnumber('tgl_pinjam');
-            $angsuran = postnumber('angsuran');
-
-            $denda = hitungDenda($tglPinjam, $angsuran);
-
-            var_dump($denda);
-            die;
-
+            $denda = postnumber('denda');
+            $no_pinjaman =  posttext('no_pinjaman');
             $now =  date('YmdHis');
+            $no_angsuran = 'AG- ' . $now;
             $tanggal = date('Y-m-d');
+            $angsuran_ke = postnumber('angsuran_ke');
+            $tenor = postnumber('tenor');
             $simpan = array(
-                'no_pinjaman' =>  posttext('no_pinjaman'),
-                'angsuran_ke' => postnumber('angsuran_ke'),
-                'no_angsuran' => 'AG- ' . $now,
+                'no_pinjaman' =>  $no_pinjaman,
+                'no_angsuran' => $no_angsuran,
                 'id_anggota' => $anggota,
-                'angsuran_ke' => postnumber('angsuran_ke'),
+                'denda' => $denda,
+                'angsuran_ke' => $angsuran_ke,
                 'keterangan' => postnumber('keterangan'),
+                'jlh_bayar' => postnumber('jlh_bayar'),
                 'tanggal' => $tanggal
             );
 
             if ($this->model_app->insert('tb_angsuran', $simpan)) {
-                // DAPATKAN ID PINJAMAN TERBARU BERDASARKAN ANGGOTA ID
-                // $idPinjaman = idPinjaman($anggota);
-                // $data['result'] = viewPinjaman($idPinjaman);
-                // $this->session->set_flashdata('sukses', 'Data Pinjaman Berhasil Berhasil Disimpan');
+                // KETIKA DILAKUKAN SIMPAN, KURANGI SISA TENOR:
+                $sisa_tenor = $tenor - $angsuran_ke;
+                $where = array('no_pinjaman' => $no_pinjaman);
+                $simpan = array(
+                    'sisa_tenor' => $sisa_tenor,
+                );
+
+                $this->model_app->update('tb_pinjaman', $simpan, $where);
+
+                $data['result'] = $this->model_app->view_where('tb_angsuran', array('no_angsuran' => $no_angsuran, 'id_anggota' => $anggota))->row_array();
+
                 $this->template->load('admin', 'admin/transaksi/angsuran/angsuran-sukses', $data);
             } else {
                 $this->session->set_flashdata('gagal', 'Data Pinjaman Gagal Disimpan');

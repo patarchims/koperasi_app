@@ -47,9 +47,7 @@ function hitungDenda($tgl, $jlhAngsuran)
     $terlambat = date_diff($t, $n);
     $hari = $terlambat->format("%a");
 
-    // menghitung denda
-    // return $hari;
-    return $denda = ($jlhAngsuran * 2 / 100) * $hari;
+    return $denda = ($jlhAngsuran * 1 / 100) * $hari;
 }
 
 

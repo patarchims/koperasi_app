@@ -63,7 +63,7 @@
                         <td><?= viewAnggota($result['id_anggota'], 'no_identitas') ?></td>
                         <td><?= viewAnggota($result['id_anggota'], 'nama_anggota') ?></td>
                         <td><?= 'IDR ' .  rupiah($result['angsuran'])  ?></td>
-                        <td><?= $result['tenor'] . ' Bulan' ?></td>
+                        <td><?= $result['sisa_tenor'] . ' Bulan' ?></td>
                         <td><?= $result['status'] ?></td>
                       </tr>
                     </tbody>
@@ -81,7 +81,10 @@
                         <input type="hidden" name="id_anggota" value="<?= $result['id_anggota'] ?>">
                         <input type="hidden" name="tgl_pinjam" value="<?= $result['tgl_pinjam'] ?>">
                         <input type="hidden" name="angsuran" value="<?= $result['angsuran'] ?>">
-
+                        <input type="hidden" name="tenor" value="<?= $result['tenor'] ?>">
+                        <input type="hidden" name="angsuran_ke" value="<?= $angsuran_ke ?>">
+                        <input type="hidden" name="jlh_bayar" value="<?= $total_bayar ?>">
+                        <input type="hidden" name="denda" value="<?= $denda ?>">
 
                         <table>
                           <tr>
@@ -92,7 +95,7 @@
                               <h6 style="font-weight: bold;"> : </h6>
                             </td>
                             <td>
-                              <h6 style="font-weight: bold;"><?= hitungAngsuran($result['no_pinjaman']) ?></h6>
+                              <h6 style="font-weight: bold;"><?= $angsuran_ke ?></h6>
                             </td>
                           </tr>
                           <tr>
@@ -103,7 +106,7 @@
                               <h6 style="font-weight: bold;"> : </h6>
                             </td>
                             <td>
-                              <h6 style="font-weight: bold;"><?= ' IDR ' . rupiah(hitungDenda($result['tgl_pinjam'], $result['angsuran'])) ?></h6>
+                              <h6 style="font-weight: bold;"><?= ' IDR ' . rupiah($denda) ?></h6>
                             </td>
                           </tr>
                           <tr>
@@ -114,7 +117,7 @@
                               <h6 style="font-weight: bold;"> : </h6>
                             </td>
                             <td>
-                              <h6 style="font-weight: bold;"> <?= 'IDR ' .  rupiah($result['angsuran'])  ?> </h6>
+                              <h6 style="font-weight: bold;"> <?= 'IDR ' .  rupiah($total_bayar)  ?> </h6>
                             </td>
                           </tr>
                           <tr>
@@ -148,10 +151,6 @@
 
 
                 </div>
-
-
-
-
               </div>
 
 
