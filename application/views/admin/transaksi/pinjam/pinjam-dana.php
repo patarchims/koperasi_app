@@ -49,7 +49,7 @@
                             </h3>
                           </div>
                           <div class="col-md-6">
-                            <h5>Tanggal Transaksi : <?= $result['tgl_pinjam'] ?></h3>
+                            <h5>Nomor Transaksi : <?= $result['no_pinjaman'] ?></h3>
                           </div>
                         </div>
 
@@ -81,11 +81,11 @@
                           <tbody>
                             <tr>
                               <td></td>
-                              <td><?= $result['jlh_pinjam'] ?></td>
+                              <td><?= rupiah($result['jlh_pinjam'])  ?></td>
                               <td><?= $result['tenor'] . ' Bulan' ?></td>
                               <td><?= $result['bunga'] . ' %' ?></td>
-                              <td><?= $result['total'] ?></td>
-                              <td><?= $result['angsuran'] ?></td>
+                              <td><?= rupiah($result['total'])  ?></td>
+                              <td><?= rupiah($result['angsuran'])  ?></td>
                             </tr>
                             <tr>
                               <td></td>
@@ -93,7 +93,7 @@
                               <td></td>
                               <td></td>
                               <td>Jumlah Pinjam</td>
-                              <td>IDR <?= $result['jlh_pinjam'] ?></td>
+                              <td>IDR <?= rupiah($result['jlh_pinjam']) ?></td>
                             </tr>
                             <tr>
                               <td></td>
@@ -101,7 +101,7 @@
                               <td></td>
                               <td></td>
                               <td>Administrasi</td>
-                              <td>IDR <?= $result['administrasi'] ?></td>
+                              <td>IDR <?= rupiah($result['administrasi'])  ?></td>
                             </tr>
 
                           </tbody>

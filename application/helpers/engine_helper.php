@@ -6,6 +6,13 @@ function identitas($p)
     return $bg[$p];
 }
 
+function viewAnggota($id, $field)
+{
+    $ci = &get_instance();
+    $bg = $ci->db->query("SELECT $field FROM tb_anggota WHERE id_anggota=$id")->row_array();
+    return $bg[$field];
+}
+
 function statusAnggota($id)
 {
     $ci = &get_instance();
@@ -17,11 +24,32 @@ function statusAnggota($id)
     }
 }
 
+function hitungAngsuran($no_pinjaman)
+{
+    $ci = &get_instance();
+    $result = $ci->db->query("SELECT COUNT(*) as jumlah FROM tb_angsuran WHERE no_pinjaman = '$no_pinjaman'")->row_array();
+    return $result['jumlah'] + 1;
+}
+
+
 function idPinjaman($id)
 {
     $ci = &get_instance();
     $db =  $ci->db->query("SELECT id_pinjaman FROM tb_pinjaman WHERE id_anggota=$id ORDER BY id_pinjaman DESC")->row_array();
     return $db['id_pinjaman'];
+}
+
+function hitungDenda($tgl, $jlhAngsuran)
+{
+
+    $t = date_create($tgl);
+    $n = date_create(date('Y-m-d'));
+    $terlambat = date_diff($t, $n);
+    $hari = $terlambat->format("%a");
+
+    // menghitung denda
+    // return $hari;
+    return $denda = ($jlhAngsuran * 2 / 100) * $hari;
 }
 
 

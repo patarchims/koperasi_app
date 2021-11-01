@@ -123,14 +123,14 @@ class Transaksi extends CI_Controller
                 $jlhPinjaman = posttext('jlh_pinjam');
                 $total = $bunga * $jlhPinjaman / 100;
                 $angsuran =  $total / $tenor;
+                $now =  date('YmdHis');
 
                 if ($status == 'Open') {
                     redirect('transaksi/pinjampesan');
-                    // redirect('transaksi/pinjampesan');
-                    // $this->template->load('admin', 'admin/transaksi/pinjam/pesan', $data);
                 } else {
                     $simpan = array(
                         'id_anggota' => $anggota,
+                        'no_pinjaman' => 'P-' . $now,
                         'jlh_pinjam' => $jlhPinjaman,
                         'bunga' => $bunga,
                         'tenor' => $tenor,
@@ -154,9 +154,6 @@ class Transaksi extends CI_Controller
                         redirect($data['link']);
                     }
                 }
-
-
-
 
                 // redirect($data['link']);
             } else {
@@ -183,5 +180,66 @@ class Transaksi extends CI_Controller
         $data['link'] = 'transaksi/pinjam';
 
         $this->template->load('admin', 'admin/transaksi/pinjam/pinjam-dana', $data);
+    }
+
+
+    function angsuran()
+    {
+        $data = $this->data;
+        $data['title'] = 'Transaksi Angsuran';
+        $data['link'] = 'transaksi/angsuran';
+
+        // $this->template->load('admin', 'admin/transaksi/pinjam/bayar-angsuran', $data);
+
+        if (isset($_POST['cari'])) {
+            $noPinjaman = $_POST['no_angsuran'];
+            $data['result'] = $this->model_app->view_pinjaman($noPinjaman);
+            $data['no_pinjaman'] = $noPinjaman;
+
+            // var_dump($data['result']['status']);
+            // die;
+
+            if ($data['result']['status'] == 'Open') {
+                $this->template->load('admin', 'admin/transaksi/angsuran/angsuran-bayar', $data);
+            } elseif ($data['result']['status']  == 'Lunas') {
+                $this->template->load('admin', 'admin/transaksi/angsuran/angsuran-infolunas', $data);
+            } else {
+                $this->template->load('admin', 'admin/transaksi/angsuran/angsuran-dana-notfound', $data);
+            }
+        } elseif (isset($_POST['bayar'])) {
+            $anggota = postnumber('id_anggota');
+            $tglPinjam = postnumber('tgl_pinjam');
+            $angsuran = postnumber('angsuran');
+
+            $denda = hitungDenda($tglPinjam, $angsuran);
+
+            var_dump($denda);
+            die;
+
+            $now =  date('YmdHis');
+            $tanggal = date('Y-m-d');
+            $simpan = array(
+                'no_pinjaman' =>  posttext('no_pinjaman'),
+                'angsuran_ke' => postnumber('angsuran_ke'),
+                'no_angsuran' => 'AG- ' . $now,
+                'id_anggota' => $anggota,
+                'angsuran_ke' => postnumber('angsuran_ke'),
+                'keterangan' => postnumber('keterangan'),
+                'tanggal' => $tanggal
+            );
+
+            if ($this->model_app->insert('tb_angsuran', $simpan)) {
+                // DAPATKAN ID PINJAMAN TERBARU BERDASARKAN ANGGOTA ID
+                // $idPinjaman = idPinjaman($anggota);
+                // $data['result'] = viewPinjaman($idPinjaman);
+                // $this->session->set_flashdata('sukses', 'Data Pinjaman Berhasil Berhasil Disimpan');
+                $this->template->load('admin', 'admin/transaksi/angsuran/angsuran-sukses', $data);
+            } else {
+                $this->session->set_flashdata('gagal', 'Data Pinjaman Gagal Disimpan');
+                redirect($data['link']);
+            }
+        } else {
+            $this->template->load('admin', 'admin/transaksi/angsuran/cari-angsuran', $data);
+        }
     }
 } //controller
