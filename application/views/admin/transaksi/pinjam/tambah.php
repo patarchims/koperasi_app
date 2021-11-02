@@ -68,10 +68,10 @@
                 <?= formInputDate('tgl_pinjam', '', 'Tanggal Pinjam', '') ?>
               </div>
 
-              <div class="form-group">
+              <!-- <div class="form-group">
                 <label class="control-label ">Tanggal Jatuh Tempo</label>
                 <?= formInputDate('tgl_tempo', '', 'Tanggal Jatuh Tempo', '') ?>
-              </div>
+              </div> -->
 
 
               <div class="form-group">

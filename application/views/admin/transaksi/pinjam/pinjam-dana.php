@@ -113,7 +113,7 @@
                         <br>
 
                         <a class="btn btn-primary" href="<?= base_url($link) ?>" type="button">Kembali</a>
-                        <a class="btn btn-info" href="<?= base_url($link) ?>" type="button">Cetak</a>
+                        <a class="btn btn-info" href="<?= base_url('transaksi/cetak_pinjaman/') .  ?>" type="button">Cetak</a>
 
 
                       </div>

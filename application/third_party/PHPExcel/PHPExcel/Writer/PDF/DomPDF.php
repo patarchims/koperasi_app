@@ -1,4 +1,5 @@
 <?php
+
 /**
  *  PHPExcel
  *
@@ -70,20 +71,20 @@ class PHPExcel_Writer_PDF_DomPDF extends PHPExcel_Writer_PDF_Core implements PHP
         if (is_null($this->getSheetIndex())) {
             $orientation = ($this->_phpExcel->getSheet(0)->getPageSetup()->getOrientation()
                 == PHPExcel_Worksheet_PageSetup::ORIENTATION_LANDSCAPE)
-                    ? 'L'
-                    : 'P';
+                ? 'L'
+                : 'P';
             $printPaperSize = $this->_phpExcel->getSheet(0)->getPageSetup()->getPaperSize();
             $printMargins = $this->_phpExcel->getSheet(0)->getPageMargins();
         } else {
             $orientation = ($this->_phpExcel->getSheet($this->getSheetIndex())->getPageSetup()->getOrientation()
                 == PHPExcel_Worksheet_PageSetup::ORIENTATION_LANDSCAPE)
-                    ? 'L'
-                    : 'P';
+                ? 'L'
+                : 'P';
             $printPaperSize = $this->_phpExcel->getSheet($this->getSheetIndex())->getPageSetup()->getPaperSize();
             $printMargins = $this->_phpExcel->getSheet($this->getSheetIndex())->getPageMargins();
         }
 
-        
+
         $orientation = ($orientation == 'L') ? 'landscape' : 'portrait';
 
         //  Override Page Orientation
@@ -108,15 +109,14 @@ class PHPExcel_Writer_PDF_DomPDF extends PHPExcel_Writer_PDF_Core implements PHP
 
         $pdf->load_html(
             $this->generateHTMLHeader(FALSE) .
-            $this->generateSheetData() .
-            $this->generateHTMLFooter()
+                $this->generateSheetData() .
+                $this->generateHTMLFooter()
         );
         $pdf->render();
 
         //  Write to file
         fwrite($fileHandle, $pdf->output());
 
-		parent::restoreStateAfterSave($fileHandle);
+        parent::restoreStateAfterSave($fileHandle);
     }
-
 }

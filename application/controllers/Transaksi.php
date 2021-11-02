@@ -137,7 +137,7 @@ class Transaksi extends CI_Controller
                         'administrasi' => postnumber('administrasi'),
                         'keterangan' => postnumber('keterangan'),
                         'tgl_pinjam' => postnumber('tgl_pinjam'),
-                        'tgl_tempo' => postnumber('tgl_tempo'),
+                        // 'tgl_tempo' => postnumber('tgl_tempo'),
                         'angsuran' => $angsuran,
                         'total' => $total,
                         'status' => 'Open'
@@ -233,12 +233,19 @@ class Transaksi extends CI_Controller
                 // KETIKA DILAKUKAN SIMPAN, KURANGI SISA TENOR:
                 $sisa_tenor = $tenor - $angsuran_ke;
                 $where = array('no_pinjaman' => $no_pinjaman);
-                $simpan = array(
-                    'sisa_tenor' => $sisa_tenor,
-                );
+
+                if ($tenor == $angsuran_ke) {
+                    $simpan = array(
+                        'status' => 'Lunas',
+                        'sisa_tenor' =>  (int)$sisa_tenor,
+                    );
+                } else {
+                    $simpan = array(
+                        'sisa_tenor' =>  (int)$sisa_tenor,
+                    );
+                }
 
                 $this->model_app->update('tb_pinjaman', $simpan, $where);
-
                 $data['result'] = $this->model_app->view_where('tb_angsuran', array('no_angsuran' => $no_angsuran, 'id_anggota' => $anggota))->row_array();
 
                 $this->template->load('admin', 'admin/transaksi/angsuran/angsuran-sukses', $data);
@@ -249,5 +256,18 @@ class Transaksi extends CI_Controller
         } else {
             $this->template->load('admin', 'admin/transaksi/angsuran/cari-angsuran', $data);
         }
+    }
+
+    function cetak_pinjaman()
+    {
+
+        $data = $this->data;
+        $data['title'] = 'Bukti Pinjaman';
+        $data['link'] = 'transaksi/pinjam';
+
+        $live_mpdf = new \Mpdf\Mpdf();
+        $all_html = $this->load->view('admin/transaksi/pinjam/report_bukti_pinjam', $data, true);
+        $live_mpdf->WriteHTML($all_html);
+        $live_mpdf->Output();
     }
 } //controller
