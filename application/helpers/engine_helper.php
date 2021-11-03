@@ -13,6 +13,15 @@ function viewAnggota($id, $field)
     return $bg[$field];
 }
 
+function viewFieldPinjaman($no, $field)
+{
+    $ci = &get_instance();
+    $bg = $ci->db->query("SELECT $field FROM tb_pinjaman WHERE no_pinjaman='$no'")->row_array();
+    return $bg[$field];
+}
+
+
+
 function statusAnggota($id)
 {
     $ci = &get_instance();
@@ -302,6 +311,8 @@ function viewPinjaman($p)
     $ci = &get_instance();
     return $fav = $ci->db->query("SELECT * FROM view_pinjaman WHERE id_pinjaman='$p'")->row_array();
 }
+
+
 
 function viewKelas($id)
 {

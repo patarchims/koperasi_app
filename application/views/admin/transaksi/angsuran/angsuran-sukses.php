@@ -37,7 +37,7 @@
                   <table class="table table-bordered">
                     <thead>
                       <tr>
-                        <th>Nomor Pinajaman</th>
+                        <th>Nomor Pinjaman</th>
                         <th>NIK</th>
                         <th>Nama</th>
                         <th>Tanggal</th>
@@ -121,9 +121,9 @@
                   <div class="col-md-5" style="text-align: right;">
 
                     <a class="btn btn-primary " href="<?= base_url($link) ?>" type="button">Batal</a>
-                    <button class="btn btn-warning " type="submit" name="bayar" style="margin-left: 10px">Cetak</button>
+                    <a class="btn btn-warning " href="<?= base_url('transaksi/cetak_angsuran/') . $result['id_angsuran']    ?>" style="margin-left: 10px">Cetak</a>
                   </div>
-                  <!-- <a class="btn btn-warning" href="<?= base_url($link) ?>" type="button">Bayar</a> -->
+
 
                 </div>
               </div>

@@ -101,12 +101,14 @@ class Model_app extends CI_model
 
     public function view_pinjaman($no_pinjaman)
     {
-        $db = $this->db->query("SELECT * FROM tb_pinjaman WHERE  no_pinjaman='$no_pinjaman'  order by id_pinjaman DESC")->row_array();
-        if (!$db) {
-            return null;
-        } else {
-            return $db;
-        }
+        return $db = $this->db->query("SELECT * FROM tb_pinjaman WHERE  no_pinjaman='$no_pinjaman'  order by id_pinjaman DESC")->row_array();
+        // var_dump($db);
+        // die;
+        // if (!$db) {
+        //     return null;
+        // } else {
+        //     return $db;
+        // }
     }
 
     // public function view_pinjaman($no_pinjaman)

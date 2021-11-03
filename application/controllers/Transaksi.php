@@ -47,7 +47,7 @@ class Transaksi extends CI_Controller
     {
         $data = $this->data;
         $data['title'] = 'Transaksi Pinjaman';
-        $data['link'] = 'transaksi/pinjam';
+        $data['link'] = 'transaksi/pinjamtambah';
 
         if (bisaBaca($data['link'], $data['id_level'])) {
             $this->template->load('admin', 'admin/transaksi/pinjam/data', $data);
@@ -62,7 +62,7 @@ class Transaksi extends CI_Controller
 
         $data = $this->data;
         $this->load->model('model_pinjam');
-        $data['link'] = 'traksaksi/pinjam';
+        $data['link'] = 'traksaksi/pinjamtambah';
         $where = array();
 
 
@@ -110,7 +110,7 @@ class Transaksi extends CI_Controller
     {
         $data = $this->data;
         $data['title'] = 'Form Tambah Data Pinjaman';
-        $data['link'] = 'transaksi/pinjam';
+        $data['link'] = 'transaksi/pinjamtambah';
         $data['subTitle'] = 'Data Pinjaman';
 
 
@@ -192,14 +192,11 @@ class Transaksi extends CI_Controller
         // $this->template->load('admin', 'admin/transaksi/pinjam/bayar-angsuran', $data);
 
         if (isset($_POST['cari'])) {
-            $noPinjaman = $_POST['no_angsuran'];
-            $data['result'] = $this->model_app->view_pinjaman($noPinjaman);
-            $data['no_pinjaman'] = $noPinjaman;
-
-            // var_dump($data['result']['status']);
-            // die;
-
-            if ($data['result']['status'] == 'Open') {
+            $data['no_pinjaman'] = $_POST['no_angsuran'];
+            $data['result'] = $this->model_app->view_pinjaman($data['no_pinjaman']);
+            if ($data['result'] == null) {
+                $this->template->load('admin', 'admin/transaksi/angsuran/angsuran-dana-notfound', $data);
+            } else if ($data['result']['status'] == 'Open') {
                 $data['angsuran_ke'] = hitungAngsuran($data['result']['no_pinjaman']);
                 $data['denda'] =  hitungDenda($data['result']['tgl_pinjam'], $data['result']['angsuran']);
                 $data['total_bayar'] = $data['denda'] + $data['result']['angsuran'];
@@ -258,15 +255,34 @@ class Transaksi extends CI_Controller
         }
     }
 
-    function cetak_pinjaman()
+    function cetak_pinjaman($id)
     {
 
         $data = $this->data;
         $data['title'] = 'Bukti Pinjaman';
         $data['link'] = 'transaksi/pinjam';
+        $where = array('no_pinjaman' => $id);
+
+        $data['result'] = $this->model_app->view_where('tb_pinjaman', $where)->row_array();
+
+
 
         $live_mpdf = new \Mpdf\Mpdf();
         $all_html = $this->load->view('admin/transaksi/pinjam/report_bukti_pinjam', $data, true);
+        $live_mpdf->WriteHTML($all_html);
+        $live_mpdf->Output();
+    }
+
+    function cetak_angsuran($id)
+    {
+        $data = $this->data;
+        $data['title'] = 'Bukti Pinjaman';
+        $data['link'] = 'transaksi/pinjam';
+        $where = array('id_angsuran' => $id);
+
+        $data['result'] = $this->model_app->view_where('tb_angsuran', $where)->row_array();
+        $live_mpdf = new \Mpdf\Mpdf();
+        $all_html = $this->load->view('admin/transaksi/angsuran/report_bukti_angsuran', $data, true);
         $live_mpdf->WriteHTML($all_html);
         $live_mpdf->Output();
     }

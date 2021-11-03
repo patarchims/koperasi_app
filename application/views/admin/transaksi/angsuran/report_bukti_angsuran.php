@@ -69,7 +69,7 @@
             <tr>
                 <td>Tanggal</td>
                 <td>:</td>
-                <td><?= $result['tgl_pinjam'] ?></td>
+                <td><?= $result['tanggal'] ?></td>
             </tr>
         </tbody>
     </table>
@@ -80,20 +80,20 @@
     <table class="table tablesolid">
         <thead>
             <tr>
-                <th class="tablesolid">Jumlah Pinjam</th>
-                <th class="tablesolid">Tenor</th>
-                <th class="tablesolid">Bunga Per Tahun</th>
-                <th class="tablesolid">Total #</th>
-                <th class="tablesolid">Angsuran</th>
+                <th class="tablesolid">Nomor Pinjam</th>
+                <th class="tablesolid">NIK</th>
+                <th class="tablesolid">Nama</th>
+                <th class="tablesolid">Tanggal</th>
+                <th class="tablesolid">Jumlah Angsuran</th>
             </tr>
         </thead>
         <tbody>
             <tr>
-                <td class="tablesolid"><?= 'IDR ' . rupiah($result['jlh_pinjam']) ?></td>
-                <td class="tablesolid"><?= $result['tenor'] . ' Bulan' ?></td>
-                <td class="tablesolid"><?= $result['bunga'] . ' %' ?></td>
-                <td class="tablesolid"><?= 'IDR ' . $result['total'] ?></td>
-                <td class="tablesolid"><?= 'IDR ' . rupiah($result['angsuran']) ?></td>
+                <td class="tablesolid"><?= $result['no_pinjaman'] ?></td>
+                <td class="tablesolid"><?= viewAnggota($result['id_anggota'], 'no_identitas') ?></td>
+                <td class="tablesolid"><?= viewAnggota($result['id_anggota'], 'nama_anggota') ?></td>
+                <td class="tablesolid"><?= $result['tanggal'] ?></td>
+                <td class="tablesolid"><?= 'IDR ' . rupiah(viewFieldPinjaman($result['no_pinjaman'], 'angsuran')) ?></td>
             </tr>
 
         <tbody>
@@ -108,19 +108,24 @@
         <table style="text-align: right; float:right; ">
             <tbody>
                 <tr>
-                    <td>Jumlah Pinjaman</td>
+                    <td>Nomor Angsuran</td>
                     <td>:</td>
-                    <td><?= 'IDR ' .  rupiah($result['jlh_pinjam']) ?> </td>
+                    <td><?= $result['no_angsuran'] ?> </td>
                 </tr>
                 <tr>
-                    <td>Biaya Administrasi</td>
+                    <td>Angsuran Ke</td>
                     <td>:</td>
-                    <td><?= 'IDR ' .  rupiah($result['administrasi']) ?> </td>
+                    <td><?= $result['angsuran_ke'] ?> </td>
                 </tr>
                 <tr>
-                    <td>Total Terima</td>
+                    <td>Denda</td>
                     <td>:</td>
-                    <td>IDR . <?= rupiah($result['jlh_pinjam'] - $result['administrasi']) ?> </td>
+                    <td>IDR . <?= rupiah($result['denda']) ?> </td>
+                </tr>
+                <tr>
+                    <td>Total Bayar</td>
+                    <td>:</td>
+                    <td>IDR . <?= rupiah($result['jlh_bayar']) ?> </td>
                 </tr>
             </tbody>
         </table>
@@ -128,8 +133,8 @@
 
 
     <div style="position: fixed; right: 0mm; top: 5.5cm; ">
-        <h4>No. Pinjam : #<?= $result['no_pinjaman'] ?></h4>
-        <h4>No. Anggota : #<?= viewAnggota($result['id_anggota'], 'no_anggota') ?> </h4>
+        <h4>No. Angsuran : #<?= $result['no_angsuran'] ?></h4>
+        <h4>No. Pinjam : #<?= $result['no_pinjaman'] ?> </h4>
     </div>
     <div style="position: fixed; left: 0mm; bottom: 10cm; ">
         <strong>Note :</strong>
