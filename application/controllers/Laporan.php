@@ -52,10 +52,13 @@ class Laporan extends CI_Controller
 
             if (isset($_POST['cari'])) {
 
+                $where = array(
+                    'no_anggota' => postnumber('id_anggota')
+                );
 
-                if (isset($_POST['simpan'])) {
-                    $id_anggota = postnumber('id_anggota');
-                }
+                $data['result'] = $this->model_app->view_where('view_pinjaman', $where)->result_array();
+
+                $this->template->load('admin', 'admin/laporan/pinjaman/view_pinjaman', $data);
             }
 
             $this->template->load('admin', 'admin/laporan/pinjaman/data', $data);
@@ -73,5 +76,42 @@ class Laporan extends CI_Controller
         $all_html = $this->load->view('admin/laporan/pinjaman/report_all', $data, true);
         $live_mpdf->WriteHTML($all_html);
         $live_mpdf->Output();
+    }
+    function cetakangsuranall()
+    {
+        $data = $this->data;
+        $data['title'] = 'Laporan Data Angsuran';
+        $data['result'] = $this->model_app->view('tb_angsuran')->result_array();
+        $live_mpdf = new \Mpdf\Mpdf();
+        $all_html = $this->load->view('admin/laporan/angsuran/report_all', $data, true);
+        $live_mpdf->WriteHTML($all_html);
+        $live_mpdf->Output();
+    }
+
+    function angsuran()
+    {
+        $data = $this->data;
+        $data['title'] = 'Laporan Data Angsuran';
+        $data['link'] = 'laporan/angsuran';
+
+        if (bisaBaca($data['link'], $data['id_level'])) {
+
+            if (isset($_POST['cari'])) {
+
+                $data['title'] = 'View Data Angsuran';
+
+                $where = array(
+                    'no_anggota' => postnumber('id_anggota')
+                );
+
+                $data['result'] = $this->model_app->view_where('view_angsuran', $where)->result_array();
+
+                $this->template->load('admin', 'admin/laporan/angsuran/view_angsuran', $data);
+            }
+
+            $this->template->load('admin', 'admin/laporan/angsuran/data', $data);
+        } else {
+            redirect('dashboard');
+        }
     }
 }

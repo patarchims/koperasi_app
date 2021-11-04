@@ -26,11 +26,9 @@ class Anggota extends CI_Controller
         parent::__construct(); // needed when adding a constructor to a controller
         Requests::register_autoloader();
         $identitas = $this->model_app->edit('identitas', array('id' => 1))->row_array();
-        $notif = api('api/notifikasi', array("npsn" => $identitas['kode'], "uid" => $identitas['uid']));
         $this->data = array(
             'identitas' => $identitas,
             'id_level' => $this->session->level,
-            'notif' => $notif->jumlah,
             'header' => 'Anggota',
             'headers' => array('Content-Type' => 'application/json'),
             'ctrl' => 'anggota'

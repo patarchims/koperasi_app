@@ -21,7 +21,7 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <div class="container-fluid">
-    <h2 class="text-center display-4">Cari Nomor Angsuran</h2>
+    <h2 class="text-center display-4">Cari Nomor Pinjaman</h2>
   </div>
 </section>
 

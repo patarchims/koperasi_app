@@ -134,6 +134,7 @@ class Transaksi extends CI_Controller
                         'jlh_pinjam' => $jlhPinjaman,
                         'bunga' => $bunga,
                         'tenor' => $tenor,
+                        'sisa_tenor' => $tenor,
                         'administrasi' => postnumber('administrasi'),
                         'keterangan' => postnumber('keterangan'),
                         'tgl_pinjam' => postnumber('tgl_pinjam'),
@@ -283,6 +284,20 @@ class Transaksi extends CI_Controller
         $data['result'] = $this->model_app->view_where('tb_angsuran', $where)->row_array();
         $live_mpdf = new \Mpdf\Mpdf();
         $all_html = $this->load->view('admin/transaksi/angsuran/report_bukti_angsuran', $data, true);
+        $live_mpdf->WriteHTML($all_html);
+        $live_mpdf->Output();
+    }
+
+    function bukti_angsuran($id)
+    {
+        $data = $this->data;
+        $data['title'] = 'Bukti Pinjaman';
+        $data['link'] = 'transaksi/pinjam';
+        $where = array('id_angsuran' => $id);
+
+        $data['result'] = $this->model_app->view_where('view_angsuran', $where)->row_array();
+        $live_mpdf = new \Mpdf\Mpdf();
+        $all_html = $this->load->view('admin/transaksi/angsuran/bukti_angsuran', $data, true);
         $live_mpdf->WriteHTML($all_html);
         $live_mpdf->Output();
     }

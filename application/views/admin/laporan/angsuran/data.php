@@ -22,7 +22,7 @@
                 <div class="card-header">
 
                     <h3 class="card-title">
-                        <a target="_blank" href="<?= base_url('laporan/cetakpinjamanall') ?>" name="cetak" class="btn btn-primary btn-block"><i class="fa fa-paper"></i> Print All</a>
+                        <a target="_blank" href="<?= base_url('laporan/cetakangsuranall') ?>" name="cetak" class="btn btn-primary btn-block"><i class="fa fa-paper"></i> Print All</a>
                     </h3>
 
                     <div class="card-tools">

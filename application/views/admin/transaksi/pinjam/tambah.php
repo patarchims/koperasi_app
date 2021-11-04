@@ -27,7 +27,7 @@
           </div>
           <!-- /.card-header -->
           <!-- form start -->
-          <form class="form-horizontal" onsubmit="ShowLoading()" action="<?= base_url($link . 'tambah') ?>" method="post" enctype="multipart/form-data" accept-charset="utf-8">
+          <form class="form-horizontal" onsubmit="ShowLoading()" action="<?= base_url($link) ?>" method="post" enctype="multipart/form-data" accept-charset="utf-8">
             <div class="card-body">
 
 

@@ -35,21 +35,17 @@ class Admin extends CI_Controller
 
 	function index()
 	{
-		$this->load->library('mathcaptcha');
 		$data = $this->data;
 
 		$this->form_validation->set_rules('username', 'Username', 'required|trim');
 		$this->form_validation->set_rules('password', 'Password', 'required|trim');
-		// $this->form_validation->set_rules('captcha', 'Hasil Captcha', 'required|numeric');
-		//if (isset($_POST['login']))
+
 		if ($this->form_validation->run() == FALSE) {
 			if ($this->session->login == true and $this->session->id_level > 0) {
 				redirect('dashboard');
 			}
 			$token = token();
 			$this->session->set_userdata(array('token' => $token));
-			$this->mathcaptcha->generatekode();
-			$data['captcha'] = $this->mathcaptcha->showcaptcha();
 			$data['token'] = $token;
 			$data['title'] = 'Login Admin';
 			$data['link'] = 'admin';
@@ -60,12 +56,7 @@ class Admin extends CI_Controller
 			$username = $this->db->escape_str($this->input->post('username'));
 			$password = $this->input->post('password');
 			$token = $this->input->post('token');
-			// $captcha = $this->input->post('captcha');
 			$token1 = $this->session->token;
-
-			$os = getOS();
-			$browser = getBrowser();
-			$ip = getIP();
 
 			$cek = $this->model_app->view_where('user', array('username' => $username, 'status' => 'Y'));
 			$total = $cek->num_rows();

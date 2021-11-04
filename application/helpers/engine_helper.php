@@ -20,6 +20,20 @@ function viewFieldPinjaman($no, $field)
     return $bg[$field];
 }
 
+function jlhAnggota()
+{
+    $ci = &get_instance();
+    $bg = $ci->db->query("SELECT COUNT(*) AS jumlah FROM tb_anggota")->row_array();
+    return $bg['jumlah'];
+}
+
+function jlhPinjaman()
+{
+    $ci = &get_instance();
+    $bg = $ci->db->query("SELECT SUM(jlh_pinjam) AS jlh_pinjaman FROM tb_pinjaman")->row_array();
+    return $bg['jlh_pinjaman'];
+}
+
 
 
 function statusAnggota($id)
@@ -59,22 +73,6 @@ function hitungDenda($tgl, $jlhAngsuran)
     return $denda = ($jlhAngsuran * 1 / 100) * $hari;
 }
 
-
-
-function api($method, $data)
-{
-    $ci = &get_instance();
-    $ci->load->library('Curl');
-    $jsonDataEncoded = json_encode($data);
-    $url = identitas('api') . $method;
-    $ci->curl->create($url);
-    $ci->curl->option(CURLOPT_HTTPHEADER, array('Content-type: application/json; Charset=UTF-8'));
-    $ci->curl->post($jsonDataEncoded);
-    // Execute - returns responce 
-    $result = $ci->curl->execute();
-    $obj = json_decode($result);
-    return $obj;
-}
 
 function bisaBaca($link, $id_level)
 {
@@ -327,173 +325,6 @@ function viewKelas($id)
 }
 
 
-function opKategoriBerita($p = '')
-{
-    $ci = &get_instance();
-    $opsi = '<option value="" >..::Pilih Kategori::..</option>';
-    $query = $ci->db->query("SELECT * FROM kategori_berita ORDER BY urutan ");
-    foreach ($query->result_array() as $r) {
-        $cl = ($r['id_kategori'] == $p) ? 'selected' : '';
-        $opsi .= '<option value="' . $r['id_kategori'] . '" ' . $cl . '>' . $r['kategori'] . '</option>';
-    }
-    return $opsi;
-}
-
-function viewKategoriBerita($p)
-{
-    $ci = &get_instance();
-    $fav = $ci->db->query("SELECT kategori FROM kategori_berita WHERE id_kategori='$p'")->row_array();
-    return $fav['kategori'];
-}
-
-function viewJlhFoto($p)
-{
-    $ci = &get_instance();
-    $fav = $ci->db->query("SELECT count(id_foto) as jlh FROM foto WHERE id_album='$p'")->row_array();
-    return $fav['jlh'];
-}
-
-function viewJlhVideo($p)
-{
-    $ci = &get_instance();
-    $fav = $ci->db->query("SELECT count(id_video) as jlh FROM video WHERE id_album='$p'")->row_array();
-    return $fav['jlh'];
-}
-
-function opTahunMasuk($p = '')
-{
-    $ci = &get_instance();
-    $opsi = '';
-    $query = $ci->db->query("SELECT DISTINCT(YEAR(tgl_masuk)) as tahun FROM siswa ORDER BY tahun ASC ");
-    foreach ($query->result_array() as $r) {
-        $cl = ($r['tahun'] == $p) ? 'selected' : '';
-        $opsi .= '<option value="' . $r['tahun'] . '" ' . $cl . '>' . $r['tahun'] . '</option>';
-    }
-    return $opsi;
-}
-
-function JlhSdm($p = '')
-{
-    $ci = &get_instance();
-    if ($p == '') {
-        $fav = $ci->db->query("SELECT count(id_guru) as jlh FROM guru")->row_array();
-    } else {
-        $fav = $ci->db->query("SELECT count(id_guru) as jlh FROM guru WHERE jenis='$p'")->row_array();
-    }
-    return $fav['jlh'];
-}
-
-function JlhSiswa($p = '')
-{
-    $ci = &get_instance();
-    if ($p == '') {
-        $fav = $ci->db->query("SELECT count(id_siswa) as jlh FROM siswa")->row_array();
-    } else {
-        $fav = $ci->db->query("SELECT count(id_siswa) as jlh FROM siswa WHERE status='$p'")->row_array();
-    }
-    return $fav['jlh'];
-}
-
-function JlhKerjasama()
-{
-    $ci = &get_instance();
-
-    $fav = $ci->db->query("SELECT count(id_kerjasama) as jlh FROM kerjasama")->row_array();
-
-    return $fav['jlh'];
-}
-
-function JlhBerita($p = '')
-{
-    $ci = &get_instance();
-    if ($p == '') {
-        $fav = $ci->db->query("SELECT count(id_berita) as jlh FROM berita")->row_array();
-    } else {
-        $fav = $ci->db->query("SELECT count(id_berita) as jlh FROM berita WHERE pub='$p'")->row_array();
-    }
-    return $fav['jlh'];
-}
-
-function JlhAgenda()
-{
-    $ci = &get_instance();
-
-    $fav = $ci->db->query("SELECT count(id_agenda) as jlh FROM agenda")->row_array();
-
-    return $fav['jlh'];
-}
-
-function JlhPengumuman()
-{
-    $ci = &get_instance();
-
-    $fav = $ci->db->query("SELECT count(id_pengumuman) as jlh FROM pengumuman")->row_array();
-
-    return $fav['jlh'];
-}
-
-function JlhHalaman()
-{
-    $ci = &get_instance();
-
-    $fav = $ci->db->query("SELECT count(id_halaman) as jlh FROM halaman")->row_array();
-
-    return $fav['jlh'];
-}
-
-function JlhPrestasi()
-{
-    $ci = &get_instance();
-
-    $fav = $ci->db->query("SELECT count(id_prestasi) as jlh FROM prestasi")->row_array();
-
-    return $fav['jlh'];
-}
-
-function JlhSlider()
-{
-    $ci = &get_instance();
-
-    $fav = $ci->db->query("SELECT count(id_slider) as jlh FROM slider")->row_array();
-
-    return $fav['jlh'];
-}
-
-function JlhDownload()
-{
-    $ci = &get_instance();
-
-    $fav = $ci->db->query("SELECT count(id_download) as jlh FROM download")->row_array();
-
-    return $fav['jlh'];
-}
-
-function JlhPesan()
-{
-    $ci = &get_instance();
-
-    $fav = $ci->db->query("SELECT count(id_pesan) as jlh FROM pesan")->row_array();
-
-    return $fav['jlh'];
-}
-
-function JlhAlbumFoto()
-{
-    $ci = &get_instance();
-
-    $fav = $ci->db->query("SELECT count(id_album) as jlh FROM album_foto")->row_array();
-
-    return $fav['jlh'];
-}
-
-function JlhAlbumVideo()
-{
-    $ci = &get_instance();
-
-    $fav = $ci->db->query("SELECT count(id_album) as jlh FROM album_video")->row_array();
-
-    return $fav['jlh'];
-}
 
 function menutk()
 {
@@ -707,16 +538,4 @@ function menusiswa()
         ),
 
     );
-}
-
-function opJenisPtk($p = '')
-{
-    $ci = &get_instance();
-    $opsi = '>';
-    $query = $ci->db->query("SELECT distinct(jenis) as jenis FROM guru ORDER BY jenis ASC ");
-    foreach ($query->result_array() as $r) {
-        $cl = ($r['jenis'] == $p) ? 'selected' : '';
-        $opsi .= '<option value="' . $r['jenis'] . '" ' . $cl . '>' . $r['jenis'] . '</option>';
-    }
-    return $opsi;
 }
