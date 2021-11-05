@@ -100,7 +100,7 @@ CREATE TABLE IF NOT EXISTS `menu` (
   PRIMARY KEY (`id_menu`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
--- Dumping data for table db_motor.menu: ~55 rows (approximately)
+-- Dumping data for table db_motor.menu: ~53 rows (approximately)
 /*!40000 ALTER TABLE `menu` DISABLE KEYS */;
 INSERT INTO `menu` (`id_menu`, `id_modul`, `id_parent`, `nama_menu`, `link`, `urutan`) VALUES
 	(3, 3, 0, 'Kode Aplikasi', 'referensi/kode', 1),
@@ -174,7 +174,7 @@ CREATE TABLE IF NOT EXISTS `menu_akses` (
   CONSTRAINT `fk_menu_akses` FOREIGN KEY (`id_menu`) REFERENCES `menu` (`id_menu`) ON DELETE CASCADE ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=131 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
--- Dumping data for table db_motor.menu_akses: ~106 rows (approximately)
+-- Dumping data for table db_motor.menu_akses: ~102 rows (approximately)
 /*!40000 ALTER TABLE `menu_akses` DISABLE KEYS */;
 INSERT INTO `menu_akses` (`id`, `id_level`, `id_menu`, `baca`, `tulis`, `ubah`, `hapus`) VALUES
 	(5, 1, 3, 1, 1, 1, 1),
@@ -299,7 +299,7 @@ CREATE TABLE IF NOT EXISTS `modul` (
   PRIMARY KEY (`id_modul`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
--- Dumping data for table db_motor.modul: ~6 rows (approximately)
+-- Dumping data for table db_motor.modul: ~5 rows (approximately)
 /*!40000 ALTER TABLE `modul` DISABLE KEYS */;
 INSERT INTO `modul` (`id_modul`, `nama_modul`, `controller`, `urutan`, `icon`, `created_at`, `modify_at`) VALUES
 	(1, 'Dashboard', 'dashboard', 1, 'nav-icon fas fa-tachometer-alt', '2020-03-21 09:39:36', '2020-03-21 09:39:36'),
@@ -307,7 +307,7 @@ INSERT INTO `modul` (`id_modul`, `nama_modul`, `controller`, `urutan`, `icon`, `
 	(4, 'Setting', 'setting', 20, 'cogs', '2020-03-21 10:05:01', '2020-03-21 10:05:01'),
 	(11, 'Anggota', 'anggota', 1, 'nav-icon fas fa-solid fa-users', '2021-10-27 12:07:44', '2021-10-27 12:07:44'),
 	(12, 'Formulir', 'formulir', 3, 'nav-icon fa fa-book', '2021-10-27 18:18:00', '2021-10-27 18:18:00'),
-	(13, 'Tansaksi', 'transaksi', 2, 'nav-icon fa fa-nav-icon fa fa-book', '2021-10-30 10:41:35', '2021-10-30 10:41:35'),
+	(13, 'Transaksi', 'transaksi', 2, 'nav-icon fa fa-nav-icon fa fa-book', '2021-10-30 10:41:35', '2021-10-30 10:41:35'),
 	(14, 'Laporan', 'laporan', 6, 'nav-icon fa fa-nav-icon fa fa-book', '2021-11-03 14:10:36', '2021-11-03 14:10:36');
 /*!40000 ALTER TABLE `modul` ENABLE KEYS */;
 
@@ -322,7 +322,7 @@ CREATE TABLE IF NOT EXISTS `modul_akses` (
   CONSTRAINT `fk_modul_akses` FOREIGN KEY (`id_modul`) REFERENCES `modul` (`id_modul`) ON DELETE CASCADE ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
--- Dumping data for table db_motor.modul_akses: ~10 rows (approximately)
+-- Dumping data for table db_motor.modul_akses: ~8 rows (approximately)
 /*!40000 ALTER TABLE `modul_akses` DISABLE KEYS */;
 INSERT INTO `modul_akses` (`id`, `id_modul`, `id_level`, `baca`) VALUES
 	(1, 1, 1, 1),
@@ -449,13 +449,10 @@ CREATE TABLE IF NOT EXISTS `tb_anggota` (
   `no_identitas` int(11) DEFAULT NULL,
   `tgl_daftar` date DEFAULT NULL,
   PRIMARY KEY (`id_anggota`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table db_motor.tb_anggota: ~2 rows (approximately)
+-- Dumping data for table db_motor.tb_anggota: ~0 rows (approximately)
 /*!40000 ALTER TABLE `tb_anggota` DISABLE KEYS */;
-INSERT INTO `tb_anggota` (`id_anggota`, `no_anggota`, `nama_anggota`, `jenis_kelamin`, `tempat_lahir`, `tgl_lahir`, `alamat`, `pekerjaan`, `agama`, `email`, `telp`, `no_identitas`, `tgl_daftar`) VALUES
-	(2, 123156154, 'Ida Samosir', 'Perempuan', 'Samosir', '2021-01-01', 'JL. BERINGIN - TANJUNG GADING, PERK. SIPAREPARE', 'Programmer', 'K', 'idasamosir@gmail.com', '08132164578', 121315468, '2021-01-01'),
-	(3, 127721250, 'Patar Chims', 'Laki-laki', 'Pematangsiantar', '2021-11-01', 'JL. BERINGIN - TANJUNG GADING, PERK. SIPAREPARE', 'Programmer', 'K', 'patarchims@gmail.com', '0811121654', 813165, '2021-11-01');
 /*!40000 ALTER TABLE `tb_anggota` ENABLE KEYS */;
 
 -- Dumping structure for table db_motor.tb_angsuran
@@ -470,34 +467,11 @@ CREATE TABLE IF NOT EXISTS `tb_angsuran` (
   `tanggal` date DEFAULT NULL,
   `jlh_bayar` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_angsuran`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table db_motor.tb_angsuran: ~6 rows (approximately)
+-- Dumping data for table db_motor.tb_angsuran: ~0 rows (approximately)
 /*!40000 ALTER TABLE `tb_angsuran` DISABLE KEYS */;
-INSERT INTO `tb_angsuran` (`id_angsuran`, `no_pinjaman`, `no_angsuran`, `id_anggota`, `denda`, `angsuran_ke`, `keterangan`, `tanggal`, `jlh_bayar`) VALUES
-	(1, 'P-20211102193133', 'AG- 20211103130942', 2, 1667, 1, '', '2021-11-03', 168334),
-	(2, 'P-20211102193133', 'AG- 20211103131616', 2, 1667, 2, '', '2021-11-03', 168334),
-	(3, 'P-20211102193133', 'AG- 20211103131930', 2, 1667, 3, '', '2021-11-03', 168334),
-	(4, 'P-20211102193133', 'AG- 20211103132034', 2, 1667, 4, '', '2021-11-03', 168334),
-	(5, 'P-20211102193133', 'AG- 20211103132116', 2, 1667, 5, '', '2021-11-03', 168334),
-	(6, 'P-20211102193133', 'AG- 20211103134551', 2, 1667, 6, '', '2021-11-03', 168334);
 /*!40000 ALTER TABLE `tb_angsuran` ENABLE KEYS */;
-
--- Dumping structure for table db_motor.tb_formulir_pp
-CREATE TABLE IF NOT EXISTS `tb_formulir_pp` (
-  `id_fpp` int(11) NOT NULL AUTO_INCREMENT,
-  `no_fpp` int(11) DEFAULT '0',
-  `tgl_permohonan` date DEFAULT NULL,
-  `jlh_permohonan` int(11) DEFAULT NULL,
-  `id_anggota` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id_fpp`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
-
--- Dumping data for table db_motor.tb_formulir_pp: ~2 rows (approximately)
-/*!40000 ALTER TABLE `tb_formulir_pp` DISABLE KEYS */;
-INSERT INTO `tb_formulir_pp` (`id_fpp`, `no_fpp`, `tgl_permohonan`, `jlh_permohonan`, `id_anggota`) VALUES
-	(5, 121212, '2021-01-01', 2700000, 2);
-/*!40000 ALTER TABLE `tb_formulir_pp` ENABLE KEYS */;
 
 -- Dumping structure for table db_motor.tb_pinjaman
 CREATE TABLE IF NOT EXISTS `tb_pinjaman` (
@@ -516,13 +490,10 @@ CREATE TABLE IF NOT EXISTS `tb_pinjaman` (
   `sisa_tenor` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id_pinjaman`),
   UNIQUE KEY `no_pinjaman` (`no_pinjaman`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Dumping data for table db_motor.tb_pinjaman: ~2 rows (approximately)
+-- Dumping data for table db_motor.tb_pinjaman: ~0 rows (approximately)
 /*!40000 ALTER TABLE `tb_pinjaman` DISABLE KEYS */;
-INSERT INTO `tb_pinjaman` (`id_pinjaman`, `id_anggota`, `no_pinjaman`, `jlh_pinjam`, `bunga`, `tenor`, `administrasi`, `keterangan`, `tgl_pinjam`, `status`, `angsuran`, `total`, `sisa_tenor`) VALUES
-	(32, 2, 'P-20211102193133', 20000000, 10, 12, 20000, 'OK', '2021-11-02', 'Open', 166667, 2000000, 6),
-	(33, 3, 'P-20211103114233', 15000000, 10, 12, 15000, 'OK', '2022-11-04', 'Open', 125000, 1500000, 0);
 /*!40000 ALTER TABLE `tb_pinjaman` ENABLE KEYS */;
 
 -- Dumping structure for table db_motor.user
@@ -552,16 +523,29 @@ INSERT INTO `user` (`id_user`, `username`, `password`, `salt`, `token`, `email`,
 	(2, 'admin', '70461276fc05cac114e7528761b61d17eed8277b', 'rCQvWUKM', '', 'admin@gmail.com', 'admin', '123', 'avatar.png', 2, '0000-00-00 00:00:00', 'Y');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 
--- Dumping structure for view db_motor.view_formulir_pp
+-- Dumping structure for view db_motor.view_angsuran
 -- Creating temporary table to overcome VIEW dependency errors
-CREATE TABLE `view_formulir_pp` (
-	`id_fpp` INT(11) NOT NULL,
-	`no_fpp` INT(11) NULL,
-	`tgl_permohonan` DATE NULL,
-	`jlh_permohonan` INT(11) NULL,
+CREATE TABLE `view_angsuran` (
+	`id_angsuran` INT(11) NOT NULL,
+	`no_pinjaman` VARCHAR(50) NULL COLLATE 'latin1_swedish_ci',
+	`no_angsuran` VARCHAR(50) NULL COLLATE 'latin1_swedish_ci',
 	`id_anggota` INT(11) NULL,
+	`denda` INT(11) NULL,
+	`angsuran_ke` INT(11) NULL,
+	`keterangan` VARCHAR(225) NULL COLLATE 'latin1_swedish_ci',
+	`tanggal` DATE NULL,
+	`jlh_bayar` INT(11) NULL,
+	`no_anggota` INT(11) NOT NULL,
 	`nama_anggota` VARCHAR(255) NOT NULL COLLATE 'latin1_swedish_ci',
-	`no_anggota` INT(11) NOT NULL
+	`jenis_kelamin` ENUM('Laki-laki','Perempuan') NOT NULL COLLATE 'latin1_swedish_ci',
+	`tempat_lahir` VARCHAR(225) NULL COLLATE 'latin1_swedish_ci',
+	`tgl_lahir` DATE NULL,
+	`alamat` VARCHAR(225) NULL COLLATE 'latin1_swedish_ci',
+	`pekerjaan` VARCHAR(225) NULL COLLATE 'latin1_swedish_ci',
+	`agama` VARCHAR(50) NULL COLLATE 'latin1_swedish_ci',
+	`telp` VARCHAR(13) NULL COLLATE 'latin1_swedish_ci',
+	`no_identitas` INT(11) NULL,
+	`tgl_daftar` DATE NULL
 ) ENGINE=MyISAM;
 
 -- Dumping structure for view db_motor.view_menu
@@ -610,15 +594,16 @@ CREATE TABLE `view_pinjaman` (
 	`angsuran` INT(11) NULL,
 	`total` INT(11) NULL,
 	`sisa_tenor` INT(11) NOT NULL,
-	`nama_anggota` VARCHAR(255) NOT NULL COLLATE 'latin1_swedish_ci'
+	`nama_anggota` VARCHAR(255) NOT NULL COLLATE 'latin1_swedish_ci',
+	`no_anggota` INT(11) NOT NULL
 ) ENGINE=MyISAM;
 
--- Dumping structure for view db_motor.view_formulir_pp
+-- Dumping structure for view db_motor.view_angsuran
 -- Removing temporary table and create final VIEW structure
-DROP TABLE IF EXISTS `view_formulir_pp`;
-CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `view_formulir_pp` AS SELECT tb_formulir_pp.*, tb_anggota.nama_anggota, tb_anggota.no_anggota 
-FROM tb_formulir_pp 
-INNER JOIN tb_anggota ON tb_formulir_pp.id_anggota = tb_anggota.id_anggota ;
+DROP TABLE IF EXISTS `view_angsuran`;
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `view_angsuran` AS SELECT tb_angsuran.*, a.no_anggota, a.nama_anggota, a.jenis_kelamin, a.tempat_lahir, a.tgl_lahir, a.alamat, a.pekerjaan, a.agama, a.telp, a.no_identitas, a.tgl_daftar FROM tb_angsuran 
+INNER JOIN tb_anggota AS a
+ON tb_angsuran.id_anggota = a.id_anggota ;
 
 -- Dumping structure for view db_motor.view_menu
 -- Removing temporary table and create final VIEW structure
@@ -633,7 +618,7 @@ CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `view_modul` AS SELECT `a`.
 -- Dumping structure for view db_motor.view_pinjaman
 -- Removing temporary table and create final VIEW structure
 DROP TABLE IF EXISTS `view_pinjaman`;
-CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `view_pinjaman` AS SELECT tb_pinjaman.*, tb_anggota.nama_anggota
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `view_pinjaman` AS SELECT tb_pinjaman.*, tb_anggota.nama_anggota, tb_anggota.no_anggota
 FROM tb_pinjaman
 INNER JOIN tb_anggota
 ON tb_anggota.id_anggota = tb_pinjaman.id_anggota ;
