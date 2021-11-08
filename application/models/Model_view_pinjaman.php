@@ -1,12 +1,12 @@
 <?php
 
-class Model_halaman extends CI_Model
+class Model_view_pinjaman extends CI_Model
 {
 
-    var $table = 'halaman'; //nama tabel dari database
-    var $column_order = array(null, 'judul', 'jenis', 'aktif', 'urutan', 'dibaca', null, null); //field yang ada di table user
-    var $column_search = array('judul', 'jenis', 'dibaca', 'isi'); //field yang diizin untuk pencarian 
-    var $order = array('urutan' => 'asc'); // default order 
+    var $table = 'view_pinjaman'; //nama tabel dari database
+    var $column_order = array(null, null, 'no_anggota', 'nama_anggota', 'no_pinjaman', 'tgl_pinjam', null); //field yang ada di table user
+    var $column_search = array('no_anggota', 'nama_anggota'); //field yang diizin untuk pencarian 
+    var $order = array('id_anggota' => 'desc'); // default order 
 
     public function __construct()
     {

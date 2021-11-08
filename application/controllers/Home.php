@@ -26,15 +26,11 @@ class Home extends CI_Controller
     {
         parent::__construct(); // needed when adding a constructor to a controller
         $identitas = $this->model_app->edit('identitas', array('id' => 1))->row_array();
-        $side_bd = api('api/sidebar', array("npsn" => $identitas['kode'], "uid" => $identitas['uid'], 'jumlah' => '10'));
         $this->data = array(
             'identitas' => $identitas,
             'ctrl' => 'home',
             'tabs' => menuwebsite(),
-            'agenda' => $this->model_app->agenda('10'),
-            'berita_dinas' => $side_bd->berita,
-            'tautan_dinas' => $side_bd->tautan,
-            'koneksi_api' => $side_bd->action
+            'agenda' => $this->model_app->agenda('10')
         );
     }
 

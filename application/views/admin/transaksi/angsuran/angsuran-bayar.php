@@ -85,7 +85,8 @@
                         <input type="hidden" name="angsuran_ke" value="<?= $angsuran_ke ?>">
                         <input type="hidden" name="jlh_bayar" value="<?= $total_bayar ?>">
                         <input type="hidden" name="denda" value="<?= $denda ?>">
-
+                        <input type="hidden" name="jth_tempo" value="<?= $tgl_jatuh_tempo ?>">
+                        <input type="hidden" name="hari_telat" value="<?= $tgl_telat ?>">
                         <table>
                           <tr>
                             <td>
@@ -96,6 +97,28 @@
                             </td>
                             <td>
                               <h6 style="font-weight: bold;"><?= $angsuran_ke ?></h6>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <h6 style="font-weight: bold;"> Tanggal Jatuh Tempo </h6>
+                            </td>
+                            <td>
+                              <h6 style="font-weight: bold;"> : </h6>
+                            </td>
+                            <td>
+                              <h6 style="font-weight: bold;"><?= tgl_indo($tgl_jatuh_tempo) ?></h6>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <h6 style="font-weight: bold;"> Jumlah Hari Telat </h6>
+                            </td>
+                            <td>
+                              <h6 style="font-weight: bold;"> : </h6>
+                            </td>
+                            <td>
+                              <h6 style="font-weight: bold;"><?= $tgl_telat . ' Hari' ?></h6>
                             </td>
                           </tr>
                           <tr>

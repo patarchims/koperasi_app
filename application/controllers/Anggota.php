@@ -169,7 +169,7 @@ class Anggota extends CI_Controller
             $row[] = $field->email;
             $row[] = $field->pekerjaan;
 
-            $row[] = $detail . '&nbsp;' . $edit . '&nbsp;' . $hapus;
+            $row[] = '&nbsp;' . $edit . '&nbsp;' . $hapus;
             $record[] = $row;
         }
 

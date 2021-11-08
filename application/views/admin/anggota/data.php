@@ -64,30 +64,6 @@
     </section>
 
 
-    <!-- 
-    <div class="modal fade" id="modalEdit">
-      <div class="modal-dialog">
-        <div class="modal-content ">
-          <div class="modal-header ">
-            <h4 class="modal-title">Anda Yakin?</h4>
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-
-          </div>
-
-
-          <div class="modal-body">
-            <form class="form-horizontal" id="update_form" method="POST">
-              <div class="fetched-data"></div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <a href="javascript:;" class="btn width-100 btn-danger" data-dismiss="modal">Tutup</a>
-
-          </div>
-
-        </div>
-      </div>
-    </div> -->
 
     <script>
       $('#mytable').on('click', '.tombol-hapus', function(e) {

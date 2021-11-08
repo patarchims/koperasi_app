@@ -28,12 +28,10 @@ class Config extends CI_Controller
             $this->session->set_userdata(array('modul' => postnumber('modul'), 'modul_sekolah' => postnumber('modul_sekolah')));
         }
         $identitas = $this->model_app->edit('identitas', array('id' => 1))->row_array();
-        $notif = api('api/notifikasi', array("npsn" => $identitas['kode'], "uid" => $identitas['uid']));
         $this->data = array(
             'identitas' => $identitas,
             'id_level' => $this->session->level,
             'modul' => $this->session->modul,
-            'notif' => $notif->jumlah,
             'ctrl' => 'config',
             'header' => 'Konfigurasi Menu',
 

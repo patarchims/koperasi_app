@@ -120,8 +120,8 @@
                   </div>
                   <div class="col-md-5" style="text-align: right;">
 
-                    <a class="btn btn-primary " href="<?= base_url($link) ?>" type="button">Batal</a>
-                    <a class="btn btn-warning " href="<?= base_url('transaksi/cetak_angsuran/') . $result['id_angsuran']    ?>" style="margin-left: 10px">Cetak</a>
+                    <a class="btn btn-primary " href="<?= base_url($link) ?>" type="button">Kembali</a>
+                    <a class="btn btn-warning " target="_blank" href="<?= base_url('transaksi/cetak_angsuran/') . $result['id_angsuran']    ?>" style="margin-left: 10px">Cetak</a>
                   </div>
 
 

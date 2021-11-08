@@ -67,6 +67,51 @@ class Laporan extends CI_Controller
         }
     }
 
+    function get_pinjaman()
+    {
+        $data = $this->data;
+        $this->load->model('model_view_pinjaman');
+        $data['link'] = 'laporan/pinjaman';
+        $where = array();
+
+
+        $list = $this->model_view_pinjaman->get_datatables($where);
+        $no = $_POST['start'];
+        $record = array();
+        foreach ($list as $field) {
+
+
+
+            $detail = '';
+
+            $detail = aksiDetail($data['link'] . 'detail', enkrip($field->no_pinjaman), ' Detail');
+
+
+            $no++;
+            $row = array();
+            $row[] = $no;
+            $row[] = $field->no_pinjaman;
+            $row[] = $field->no_anggota;
+            $row[] = $field->jlh_pinjam;
+            $row[] = $field->nama_anggota;
+            $row[] = $field->angsuran;
+            $row[] = $field->status;
+
+            $row[] = '&nbsp;' . $detail;
+            $record[] = $row;
+        }
+
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->model_view_pinjaman->count_all($where),
+            "recordsFiltered" => $this->model_view_pinjaman->count_filtered($where),
+            "data" => $record,
+        );
+        //output dalam format JSON
+        echo json_encode($output);
+    }
+
+
     function cetakpinjamanall()
     {
         $data = $this->data;
@@ -113,5 +158,49 @@ class Laporan extends CI_Controller
         } else {
             redirect('dashboard');
         }
+    }
+
+    function get_angsuran()
+    {
+        $data = $this->data;
+        $this->load->model('model_view_pinjaman');
+        $data['link'] = 'laporan/pinjaman';
+        $where = array();
+
+
+        $list = $this->model_view_pinjaman->get_datatables($where);
+        $no = $_POST['start'];
+        $record = array();
+        foreach ($list as $field) {
+
+
+
+            $detail = '';
+
+            $detail = aksiDetail($data['link'] . 'detail', enkrip($field->no_pinjaman), ' Detail');
+
+
+            $no++;
+            $row = array();
+            $row[] = $no;
+            $row[] = $field->no_pinjaman;
+            $row[] = $field->no_anggota;
+            $row[] = $field->jlh_pinjam;
+            $row[] = $field->nama_anggota;
+            $row[] = $field->angsuran;
+            $row[] = $field->status;
+
+            $row[] = '&nbsp;' . $detail;
+            $record[] = $row;
+        }
+
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->model_view_pinjaman->count_all($where),
+            "recordsFiltered" => $this->model_view_pinjaman->count_filtered($where),
+            "data" => $record,
+        );
+        //output dalam format JSON
+        echo json_encode($output);
     }
 }

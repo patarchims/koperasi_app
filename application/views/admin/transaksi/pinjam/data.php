@@ -38,11 +38,11 @@
                   <thead>
                     <tr>
                       <th>No</th>
-                      <th>Nama Anggota</th>
-                      <th>Jumlah Pinjam</th>
-                      <th>Bunga</th>
-                      <th>Tenor</th>
-                      <th>Administrasi</th>
+                      <th>Nomor Anggota</th>
+                      <!-- <th>Nama</th>
+                      <th>Jenis Kelamin</th>
+                      <th>email</th>
+                      <th>Pekerjaan</th> -->
                       <th>Aksi</th>
                     </tr>
                   </thead>
@@ -108,16 +108,17 @@
           "order": [],
 
           "ajax": {
-            "url": "<?php echo base_url('transaksi/get_dataPinjam') ?>",
+            "url": "<?php echo base_url('transaksi/get_data_pinjam') ?>",
             "type": "POST"
           },
 
+
           "columnDefs": [{
-              "targets": [0, 6],
+              "targets": [0, 2],
               "orderable": false,
             },
             {
-              "targets": [6],
+              "targets": [1],
               "className": 'text-nowrap',
             }
           ],

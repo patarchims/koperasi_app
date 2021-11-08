@@ -27,12 +27,12 @@
           </div>
           <!-- /.card-header -->
           <!-- form start -->
-          <form class="form-horizontal" onsubmit="ShowLoading()" action="<?= base_url($link) ?>" method="post" enctype="multipart/form-data" accept-charset="utf-8">
+          <form class="form-horizontal" onsubmit="ShowLoading()" action="<?= base_url($link) . 'tambah' ?>" method="post" enctype="multipart/form-data" accept-charset="utf-8">
             <div class="card-body">
 
 
               <div class="form-group">
-                <label class="control-label  ">Anggota</label>
+                <label class="control-label">Anggota</label>
                 <select name="id_anggota" class="form-control anggota" required>
                   <option value=""></option>
                   <?= opAnggota('') ?>
@@ -62,11 +62,6 @@
                 <?= formInputNumber('administrasi', '', 'Administrasi', 'required') ?>
               </div>
 
-
-              <div class="form-group">
-                <label class="control-label ">Tanggal Pinjam</label>
-                <?= formInputDate('tgl_pinjam', '', 'Tanggal Pinjam', '') ?>
-              </div>
 
               <!-- <div class="form-group">
                 <label class="control-label ">Tanggal Jatuh Tempo</label>

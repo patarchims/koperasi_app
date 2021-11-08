@@ -65,13 +65,44 @@ function idPinjaman($id)
 function hitungDenda($tgl, $jlhAngsuran)
 {
 
-    $t = date_create($tgl);
-    $n = date_create(date('Y-m-d'));
-    $terlambat = date_diff($t, $n);
-    $hari = $terlambat->format("%a");
+    $dt = strtotime($tgl);
+    $t = date("Y-m-d", strtotime("+1 month", $dt));
+    $date = date_create($t);
+    $now = date_create(date('Y-m-d'));
 
-    return $denda = ($jlhAngsuran * 1 / 100) * $hari;
+    if ($date >= $now) {
+        return 0;
+    } else {
+        $terlambat = date_diff($date, $now);
+        $hari = $terlambat->format("%a");
+        $denda = ($jlhAngsuran * 1 / 100) * $hari;
+        return $denda;
+    }
 }
+
+function hitungHariTelat($tgl)
+{
+    $dt = strtotime($tgl);
+    $t = date("Y-m-d", strtotime("+1 month", $dt));
+    $date = date_create($t);
+    $now = date_create(date('Y-m-d'));
+
+    if ($date >= $now) {
+        return 0;
+    } else {
+        $terlambat = date_diff($date, $now);
+        $hari = $terlambat->format("%a");
+        return $hari;
+    }
+}
+
+function tglJatuhTempo($date)
+{
+    $dt = strtotime($date);
+    $t = date("Y-m-d", strtotime("+1 month", $dt));
+    return $t;
+}
+
 
 
 function bisaBaca($link, $id_level)

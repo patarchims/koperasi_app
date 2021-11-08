@@ -3,9 +3,9 @@
 class Model_pinjam extends CI_Model
 {
 
-    var $table = 'view_pinjaman'; //nama tabel dari database
-    var $column_order = array(null, null,  'nama_anggota', 'jlh_pinjam', 'bunga', 'tenor',  null); //field yang ada di table user
-    var $column_search = array('nama_anggota', 'tenor', 'bunga'); //field yang diizin untuk pencarian 
+    var $table = 'tb_pinjaman'; //nama tabel dari database
+    var $column_order = array(null, 'no_pinjaman', null); //field yang ada di table user
+    var $column_search = array('no_pinjaman'); //field yang diizin untuk pencarian 
     var $order = array('id_pinjaman' => 'desc'); // default order 
 
     public function __construct()

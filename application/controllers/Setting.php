@@ -26,11 +26,9 @@ class Setting extends CI_Controller
     parent::__construct(); // needed when adding a constructor to a controller
 
     $identitas = $this->model_app->edit('identitas', array('id' => 1))->row_array();
-    $notif = api('api/notifikasi', array("npsn" => $identitas['kode'], "uid" => $identitas['uid']));
     $this->data = array(
       'identitas' => $identitas,
       'id_level' => $this->session->level,
-      'notif' => $notif->jumlah,
       'header' => 'Setting',
       'ctrl' => 'setting'
     );
@@ -491,9 +489,9 @@ class Setting extends CI_Controller
     if (bisaBaca($data['link'], $data['id_level'])) {
 
 
-      $row = api('api/panduan', array("npsn" => $data['identitas']['kode'], "uid" => $data['identitas']['uid']));
+      // $row = api('api/panduan', array("npsn" => $data['identitas']['kode'], "uid" => $data['identitas']['uid']));
 
-      $data['record'] = $row->hasil;
+      // $data['record'] = $row->hasil;
 
       $this->template->load('admin', 'admin/setting/panduan/data', $data);
     } else {

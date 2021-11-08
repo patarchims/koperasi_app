@@ -53,7 +53,7 @@
                                 <td><?= 'IDR ' . rupiah($key['angsuran']) ?></td>
                                 <td><?= tgl_indo($key['tgl_pinjam']) ?></td>
                                 <td>
-                                    <a target="_blank" href="<?= base_url('transaksi/cetak_angsuran/') . $key['no_pinjaman'] ?>" class="btn btn-block btn-info">Cetak</a>
+                                    <a target="_blank" href="<?= base_url('transaksi/cetak_pinjaman/') . $key['no_pinjaman'] ?>" class="btn btn-block btn-info">Cetak</a>
                                 </td>
 
                             </tr>
