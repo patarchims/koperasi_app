@@ -7,7 +7,7 @@
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active">Icons</li>
+                    <li class="breadcrumb-item active"><?= $title ?></li>
                 </ol>
             </div>
         </div>
@@ -31,7 +31,7 @@
                                 <strong>Atau</strong> Masukan Nomor Anggota
                             </div>
 
-                            <input type="text" name="id_anggota" class="form-control" placeholder="Search Mail">
+                            <input type="text" name="id_anggota" class="form-control" placeholder="Nomor Anggota">
                             <div class="input-group-append">
                                 <button class="btn btn-primary" name="cari" type="submit">
                                     <i class="fas fa-search"></i>

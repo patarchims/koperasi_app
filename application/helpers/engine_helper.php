@@ -96,9 +96,17 @@ function hitungHariTelat($tgl)
     }
 }
 
-function tglJatuhTempo($date)
+function tglJatuhTempo($date, $datePinjam)
 {
-    $dt = strtotime($date);
+    $ci = &get_instance();
+    $fav = $ci->db->query("SELECT tgl_jatuh_tempo as tgl_tempo FROM view_angsuran WHERE no_pinjaman='$datePinjam' ORDER BY id_angsuran DESC")->row_array();
+
+    if ($fav) {
+
+        $dt = strtotime($fav['tgl_tempo']);
+    } else {
+        $dt = strtotime($date);
+    }
     $t = date("Y-m-d", strtotime("+1 month", $dt));
     return $t;
 }
@@ -316,6 +324,18 @@ function opAnggota($p = '')
     foreach ($query->result_array() as $r) {
         $cl = ($r['id_anggota'] == $p) ? 'selected' : '';
         $opsi .= '<option value="' . $r['id_anggota'] . '" ' . $cl . '>' . stripslashes($r['no_anggota']) . ' - ' . stripslashes($r['nama_anggota']) . '</option>';
+    }
+    return $opsi;
+}
+
+function opPinjaman($p = '')
+{
+    $ci = &get_instance();
+    $opsi = '';
+    $query = $ci->db->query("SELECT a.id_pinjaman, a.no_pinjaman, a.nama_anggota FROM view_pinjaman as a ORDER BY a.id_pinjaman asc");
+    foreach ($query->result_array() as $r) {
+        $cl = ($r['no_pinjaman'] == $p) ? 'selected' : '';
+        $opsi .= '<option value="' . $r['no_pinjaman'] . '" ' . $cl . '>' . stripslashes($r['no_pinjaman']) . ' - ' . stripslashes($r['nama_anggota']) . '</option>';
     }
     return $opsi;
 }

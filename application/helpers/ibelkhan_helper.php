@@ -1199,7 +1199,7 @@ function aksiEdit($link, $id, $kata = '')
 
 function aksiDetail($link, $id, $kata = '')
 {
-  $aksi = '<a title="Detail Data" href="' . base_url($link . '/' . $id) . '" class="btn btn-xs btn-info"><i class="fa fa-info-circle"></i> ' . $kata . '</a>';
+  $aksi = '<a title="Detail Data" target="_blank" href="' . base_url($link . '/' . $id) . '" class="btn btn-xs btn-info"><i class="fa fa-info-circle"></i> ' . $kata . '</a>';
   return $aksi;
 }
 

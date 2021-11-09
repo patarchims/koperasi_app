@@ -84,7 +84,7 @@ class Laporan extends CI_Controller
 
             $detail = '';
 
-            $detail = aksiDetail($data['link'] . 'detail', enkrip($field->no_pinjaman), ' Detail');
+            $detail = aksiDetail('transaksi/cetak_pinjaman/', $field->no_pinjaman, ' Detail');
 
 
             $no++;
@@ -163,12 +163,12 @@ class Laporan extends CI_Controller
     function get_angsuran()
     {
         $data = $this->data;
-        $this->load->model('model_view_pinjaman');
-        $data['link'] = 'laporan/pinjaman';
+        $this->load->model('model_view_angsuran');
+        $data['link'] = 'laporan/angsuran';
         $where = array();
 
 
-        $list = $this->model_view_pinjaman->get_datatables($where);
+        $list = $this->model_view_angsuran->get_datatables($where);
         $no = $_POST['start'];
         $record = array();
         foreach ($list as $field) {
@@ -177,18 +177,18 @@ class Laporan extends CI_Controller
 
             $detail = '';
 
-            $detail = aksiDetail($data['link'] . 'detail', enkrip($field->no_pinjaman), ' Detail');
+            $detail = aksiDetail('transaksi/cetak_angsuran/', $field->id_angsuran, ' Detail');
 
 
             $no++;
             $row = array();
             $row[] = $no;
-            $row[] = $field->no_pinjaman;
+            $row[] = $field->no_angsuran;
             $row[] = $field->no_anggota;
-            $row[] = $field->jlh_pinjam;
+            $row[] = 'IDR. ' . rupiah($field->jlh_bayar);
             $row[] = $field->nama_anggota;
-            $row[] = $field->angsuran;
-            $row[] = $field->status;
+            $row[] = $field->angsuran_ke;
+            $row[] = tgl_indo($field->tgl_jatuh_tempo);
 
             $row[] = '&nbsp;' . $detail;
             $record[] = $row;
@@ -196,8 +196,8 @@ class Laporan extends CI_Controller
 
         $output = array(
             "draw" => $_POST['draw'],
-            "recordsTotal" => $this->model_view_pinjaman->count_all($where),
-            "recordsFiltered" => $this->model_view_pinjaman->count_filtered($where),
+            "recordsTotal" => $this->model_view_angsuran->count_all($where),
+            "recordsFiltered" => $this->model_view_angsuran->count_filtered($where),
             "data" => $record,
         );
         //output dalam format JSON

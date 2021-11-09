@@ -3,10 +3,10 @@
 class Model_view_angsuran extends CI_Model
 {
 
-    var $table = 'view_pinjaman'; //nama tabel dari database
-    var $column_order = array(null, null, 'no_anggota', 'nama_anggota', 'no_pinjaman', 'tgl_pinjam', null); //field yang ada di table user
-    var $column_search = array('no_anggota', 'nama_anggota'); //field yang diizin untuk pencarian 
-    var $order = array('id_anggota' => 'desc'); // default order 
+    var $table = 'view_angsuran'; //nama tabel dari database
+    var $column_order = array(null, null, 'no_pinjaman', 'nama_anggota', 'no_angsuran', 'tanggal', null); //field yang ada di table user
+    var $column_search = array('no_pinjaman', 'nama_anggota'); //field yang diizin untuk pencarian 
+    var $order = array('id_angsuran' => 'desc'); // default order 
 
     public function __construct()
     {

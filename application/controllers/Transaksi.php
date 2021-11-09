@@ -88,12 +88,6 @@ class Transaksi extends CI_Controller
             $row = array();
             $row[] = $no;
             $row[] = $field->no_pinjaman;
-            // $row[] = 'nama';
-            // $row[] = viewAnggota($field->id_anggota, 'nama_anggota');
-            // $row[] = 'IDR ' .  rupiah($field->jlh_pinjam);
-            // $row[] = $field->bunga . ' %';
-            // $row[] = $field->tenor . ' Bulan';
-            // $row[] = 'IDR ' . rupiah($field->administrasi);
             $row[] = $detail . '&nbsp;' . $edit . '&nbsp;' . $hapus;
             $record[] = $row;
         }
@@ -189,8 +183,6 @@ class Transaksi extends CI_Controller
         $data['title'] = 'Transaksi Angsuran';
         $data['link'] = 'transaksi/angsuran';
 
-        // $this->template->load('admin', 'admin/transaksi/pinjam/bayar-angsuran', $data);
-
         if (isset($_POST['cari'])) {
             $data['no_pinjaman'] = $_POST['no_angsuran'];
             $data['result'] = $this->model_app->view_pinjaman($data['no_pinjaman']);
@@ -198,10 +190,14 @@ class Transaksi extends CI_Controller
                 $this->template->load('admin', 'admin/transaksi/angsuran/angsuran-dana-notfound', $data);
             } else if ($data['result']['status'] == 'Open') {
                 $data['angsuran_ke'] = hitungAngsuran($data['result']['no_pinjaman']);
-                $data['denda'] =  hitungDenda($data['result']['tgl_pinjam'], $data['result']['angsuran']);
+
+
+                // Cari Tanggal Jatuh Tempo
+                $pinjaman = $data['no_pinjaman'];
+                $data['tgl_jatuh_tempo'] =  tglJatuhTempo($data['result']['tgl_pinjam'], $pinjaman);
+                $data['tgl_telat'] = hitungHariTelat($data['tgl_jatuh_tempo']);
+                $data['denda'] =  hitungDenda($data['tgl_jatuh_tempo'], $data['result']['angsuran']);
                 $data['total_bayar'] = $data['denda'] + $data['result']['angsuran'];
-                $data['tgl_jatuh_tempo'] =  tglJatuhTempo($data['result']['tgl_pinjam']);
-                $data['tgl_telat'] = hitungHariTelat($data['result']['tgl_pinjam']);
                 $this->template->load('admin', 'admin/transaksi/angsuran/angsuran-bayar', $data);
             } elseif ($data['result']['status']  == 'Lunas') {
                 $this->template->load('admin', 'admin/transaksi/angsuran/angsuran-infolunas', $data);
@@ -301,5 +297,43 @@ class Transaksi extends CI_Controller
         $all_html = $this->load->view('admin/transaksi/angsuran/bukti_angsuran', $data, true);
         $live_mpdf->WriteHTML($all_html);
         $live_mpdf->Output();
+    }
+
+    function get_pinjaman()
+    {
+        $data = $this->data;
+        $this->load->model('model_view_pinjaman');
+        $data['link'] = 'transaksi/pinjaman';
+        $where = array();
+
+
+        $list = $this->model_view_pinjaman->get_datatables($where);
+        $no = $_POST['start'];
+        $record = array();
+        foreach ($list as $field) {
+
+
+            $no++;
+            $row = array();
+            $row[] = $no;
+            $row[] = $field->no_pinjaman;
+            $row[] = $field->no_anggota;
+            $row[] = 'IDR. ' . rupiah($field->jlh_pinjam);
+            $row[] = $field->nama_anggota;
+            $row[] = 'IDR. ' .  rupiah($field->angsuran);
+            $row[] = $field->status;
+
+            // $row[] = '&nbsp;' . $detail;
+            $record[] = $row;
+        }
+
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->model_view_pinjaman->count_all($where),
+            "recordsFiltered" => $this->model_view_pinjaman->count_filtered($where),
+            "data" => $record,
+        );
+        //output dalam format JSON
+        echo json_encode($output);
     }
 } //controller
