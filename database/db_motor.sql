@@ -100,7 +100,7 @@ CREATE TABLE IF NOT EXISTS `menu` (
   PRIMARY KEY (`id_menu`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
--- Dumping data for table db_motor.menu: ~53 rows (approximately)
+-- Dumping data for table db_motor.menu: ~54 rows (approximately)
 /*!40000 ALTER TABLE `menu` DISABLE KEYS */;
 INSERT INTO `menu` (`id_menu`, `id_modul`, `id_parent`, `nama_menu`, `link`, `urutan`) VALUES
 	(3, 3, 0, 'Kode Aplikasi', 'referensi/kode', 1),
@@ -153,7 +153,7 @@ INSERT INTO `menu` (`id_menu`, `id_modul`, `id_parent`, `nama_menu`, `link`, `ur
 	(59, 10, 0, 'Registrasi Siswa Baru', 'ppdb/registrasi', 5),
 	(60, 11, 0, 'Data Anggota', 'anggota/data', 1),
 	(61, 12, 0, 'Formulir Pinjaman', 'formulir/data', 1),
-	(62, 13, 0, 'Pinjam', 'transaksi/pinjamtambah', 1),
+	(62, 13, 0, 'Pinjam', 'transaksi/pinjam', 1),
 	(63, 13, 0, 'Angsuran', 'transaksi/angsuran', 2),
 	(64, 14, 0, 'Pinjaman', 'laporan/pinjaman', 1),
 	(65, 14, 0, 'Angsuran', 'laporan/angsuran', 2);
@@ -174,7 +174,7 @@ CREATE TABLE IF NOT EXISTS `menu_akses` (
   CONSTRAINT `fk_menu_akses` FOREIGN KEY (`id_menu`) REFERENCES `menu` (`id_menu`) ON DELETE CASCADE ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=131 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
--- Dumping data for table db_motor.menu_akses: ~102 rows (approximately)
+-- Dumping data for table db_motor.menu_akses: ~108 rows (approximately)
 /*!40000 ALTER TABLE `menu_akses` DISABLE KEYS */;
 INSERT INTO `menu_akses` (`id`, `id_level`, `id_menu`, `baca`, `tulis`, `ubah`, `hapus`) VALUES
 	(5, 1, 3, 1, 1, 1, 1),
@@ -281,9 +281,9 @@ INSERT INTO `menu_akses` (`id`, `id_level`, `id_menu`, `baca`, `tulis`, `ubah`, 
 	(124, 2, 62, 1, 1, 1, 1),
 	(125, 1, 63, 1, 1, 1, 1),
 	(126, 2, 63, 1, 1, 1, 1),
-	(127, 1, 64, 0, 0, 0, 0),
+	(127, 1, 64, 1, 1, 1, 1),
 	(128, 2, 64, 1, 1, 1, 1),
-	(129, 1, 65, 0, 0, 0, 0),
+	(129, 1, 65, 1, 1, 1, 1),
 	(130, 2, 65, 1, 1, 1, 1);
 /*!40000 ALTER TABLE `menu_akses` ENABLE KEYS */;
 
@@ -299,7 +299,7 @@ CREATE TABLE IF NOT EXISTS `modul` (
   PRIMARY KEY (`id_modul`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
--- Dumping data for table db_motor.modul: ~5 rows (approximately)
+-- Dumping data for table db_motor.modul: ~7 rows (approximately)
 /*!40000 ALTER TABLE `modul` DISABLE KEYS */;
 INSERT INTO `modul` (`id_modul`, `nama_modul`, `controller`, `urutan`, `icon`, `created_at`, `modify_at`) VALUES
 	(1, 'Dashboard', 'dashboard', 1, 'nav-icon fas fa-tachometer-alt', '2020-03-21 09:39:36', '2020-03-21 09:39:36'),
@@ -322,7 +322,7 @@ CREATE TABLE IF NOT EXISTS `modul_akses` (
   CONSTRAINT `fk_modul_akses` FOREIGN KEY (`id_modul`) REFERENCES `modul` (`id_modul`) ON DELETE CASCADE ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
--- Dumping data for table db_motor.modul_akses: ~8 rows (approximately)
+-- Dumping data for table db_motor.modul_akses: ~14 rows (approximately)
 /*!40000 ALTER TABLE `modul_akses` DISABLE KEYS */;
 INSERT INTO `modul_akses` (`id`, `id_modul`, `id_level`, `baca`) VALUES
 	(1, 1, 1, 1),
@@ -337,7 +337,7 @@ INSERT INTO `modul_akses` (`id`, `id_modul`, `id_level`, `baca`) VALUES
 	(24, 12, 2, 0),
 	(25, 13, 1, 1),
 	(26, 13, 2, 1),
-	(27, 14, 1, 0),
+	(27, 14, 1, 1),
 	(28, 14, 2, 1);
 /*!40000 ALTER TABLE `modul_akses` ENABLE KEYS */;
 
@@ -351,7 +351,7 @@ CREATE TABLE IF NOT EXISTS `tbrefa` (
   UNIQUE KEY `idxref` (`idxref`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
--- Dumping data for table db_motor.tbrefa: ~6 rows (approximately)
+-- Dumping data for table db_motor.tbrefa: ~7 rows (approximately)
 /*!40000 ALTER TABLE `tbrefa` DISABLE KEYS */;
 INSERT INTO `tbrefa` (`id`, `referensi`, `idxref`) VALUES
 	(1, 'Jenjang Pendidikan', 'PENDIDIKAN'),
@@ -377,7 +377,7 @@ CREATE TABLE IF NOT EXISTS `tbrefb` (
   UNIQUE KEY `k1_tbrefb_idxref` (`idxref`,`kderef`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
--- Dumping data for table db_motor.tbrefb: ~45 rows (approximately)
+-- Dumping data for table db_motor.tbrefb: ~51 rows (approximately)
 /*!40000 ALTER TABLE `tbrefb` DISABLE KEYS */;
 INSERT INTO `tbrefb` (`id`, `idxref`, `kderef`, `nmaref1`, `nmaref2`, `nmaref3`, `kdedikti`, `stsrek`) VALUES
 	(1, 'PENDIDIKAN', 'S3', 'Doktoral', '', '', '', 'Aktif'),
@@ -449,10 +449,12 @@ CREATE TABLE IF NOT EXISTS `tb_anggota` (
   `no_identitas` int(11) DEFAULT NULL,
   `tgl_daftar` date DEFAULT NULL,
   PRIMARY KEY (`id_anggota`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
--- Dumping data for table db_motor.tb_anggota: ~0 rows (approximately)
+-- Dumping data for table db_motor.tb_anggota: ~1 rows (approximately)
 /*!40000 ALTER TABLE `tb_anggota` DISABLE KEYS */;
+INSERT INTO `tb_anggota` (`id_anggota`, `no_anggota`, `nama_anggota`, `jenis_kelamin`, `tempat_lahir`, `tgl_lahir`, `alamat`, `pekerjaan`, `agama`, `email`, `telp`, `no_identitas`, `tgl_daftar`) VALUES
+	(1, 44121, 'Ida Samosir', 'Perempuan', 'Samosir', '2021-11-05', 'JL. BERINGIN - TANJUNG GADING, PERK. SIPAREPARE', 'Programmer', 'H', 'dosterpeter@ymail.com', '0854', 2424, '2021-11-05');
 /*!40000 ALTER TABLE `tb_anggota` ENABLE KEYS */;
 
 -- Dumping structure for table db_motor.tb_angsuran
@@ -466,11 +468,15 @@ CREATE TABLE IF NOT EXISTS `tb_angsuran` (
   `keterangan` varchar(225) DEFAULT NULL,
   `tanggal` date DEFAULT NULL,
   `jlh_bayar` int(11) DEFAULT NULL,
+  `tgl_jatuh_tempo` date DEFAULT NULL,
+  `hari_telat` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_angsuran`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=latin1;
 
--- Dumping data for table db_motor.tb_angsuran: ~0 rows (approximately)
+-- Dumping data for table db_motor.tb_angsuran: ~1 rows (approximately)
 /*!40000 ALTER TABLE `tb_angsuran` DISABLE KEYS */;
+INSERT INTO `tb_angsuran` (`id_angsuran`, `no_pinjaman`, `no_angsuran`, `id_anggota`, `denda`, `angsuran_ke`, `keterangan`, `tanggal`, `jlh_bayar`, `tgl_jatuh_tempo`, `hari_telat`) VALUES
+	(26, 'P-20211108142802', 'AG- 20211109122816', 1, 0, 1, '', '2021-11-09', 1250000, '2021-11-08', 0);
 /*!40000 ALTER TABLE `tb_angsuran` ENABLE KEYS */;
 
 -- Dumping structure for table db_motor.tb_pinjaman
@@ -490,10 +496,12 @@ CREATE TABLE IF NOT EXISTS `tb_pinjaman` (
   `sisa_tenor` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id_pinjaman`),
   UNIQUE KEY `no_pinjaman` (`no_pinjaman`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
--- Dumping data for table db_motor.tb_pinjaman: ~0 rows (approximately)
+-- Dumping data for table db_motor.tb_pinjaman: ~1 rows (approximately)
 /*!40000 ALTER TABLE `tb_pinjaman` DISABLE KEYS */;
+INSERT INTO `tb_pinjaman` (`id_pinjaman`, `id_anggota`, `no_pinjaman`, `jlh_pinjam`, `bunga`, `tenor`, `administrasi`, `keterangan`, `tgl_pinjam`, `status`, `angsuran`, `total`, `sisa_tenor`) VALUES
+	(3, 1, 'P-20211108142802', 150000000, 10, 12, 15000, 'OK', '2021-10-08', 'Open', 1250000, 15000000, 11);
 /*!40000 ALTER TABLE `tb_pinjaman` ENABLE KEYS */;
 
 -- Dumping structure for table db_motor.user
@@ -519,7 +527,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 -- Dumping data for table db_motor.user: ~2 rows (approximately)
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (`id_user`, `username`, `password`, `salt`, `token`, `email`, `nama`, `hp`, `gambar`, `level`, `login_terakhir`, `status`) VALUES
-	(1, 'hottuarealy@gmail.com', 'e1594bb9652971bd9f94b9e2e50c77ff2e3d6a6b', '6VDaUeGk', 'eNbIMHbN4r3oBhISiQoaCB0DTX379KQJa3qHjQgH2nyv92gf9yUBVfphzdnzEWxQ', 'hottuarealy@gmail.com', 'Administrator', '081360275177', 'logolabusel.png', 1, '2020-03-10 23:09:51', 'Y'),
+	(1, 'administrator', 'e1594bb9652971bd9f94b9e2e50c77ff2e3d6a6b', '6VDaUeGk', 'eNbIMHbN4r3oBhISiQoaCB0DTX379KQJa3qHjQgH2nyv92gf9yUBVfphzdnzEWxQ', 'hottuarealy@gmail.com', 'Administrator', '081360275177', 'logolabusel.png', 1, '2020-03-10 23:09:51', 'Y'),
 	(2, 'admin', '70461276fc05cac114e7528761b61d17eed8277b', 'rCQvWUKM', '', 'admin@gmail.com', 'admin', '123', 'avatar.png', 2, '0000-00-00 00:00:00', 'Y');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 
@@ -535,6 +543,8 @@ CREATE TABLE `view_angsuran` (
 	`keterangan` VARCHAR(225) NULL COLLATE 'latin1_swedish_ci',
 	`tanggal` DATE NULL,
 	`jlh_bayar` INT(11) NULL,
+	`tgl_jatuh_tempo` DATE NULL,
+	`hari_telat` INT(11) NULL,
 	`no_anggota` INT(11) NOT NULL,
 	`nama_anggota` VARCHAR(255) NOT NULL COLLATE 'latin1_swedish_ci',
 	`jenis_kelamin` ENUM('Laki-laki','Perempuan') NOT NULL COLLATE 'latin1_swedish_ci',
