@@ -61,6 +61,8 @@ class Anggota extends CI_Controller
         $data = $this->data;
         $data['title'] = 'Form Tambah Data Anggota';
         $data['link'] = 'anggota/data';
+        $now =  date('YmdHis');
+        $data['nomor_anggota'] = 'A-' . $now;
 
         if (bisaTulis($data['link'], $data['id_level'])) {
             if (isset($_POST['simpan'])) {

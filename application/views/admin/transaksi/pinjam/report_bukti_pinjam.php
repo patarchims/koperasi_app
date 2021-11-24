@@ -120,7 +120,7 @@
                 <tr>
                     <td>Total Terima</td>
                     <td>:</td>
-                    <td>IDR . <?= rupiah($result['jlh_pinjam'] - $result['administrasi']) ?> </td>
+                    <td>IDR . <?= rupiah($result['jlh_pinjam']) ?> </td>
                 </tr>
             </tbody>
         </table>

@@ -313,6 +313,8 @@ class Transaksi extends CI_Controller
         foreach ($list as $field) {
 
 
+            $agunan = '<a href="' . base_url('transaksi/agunan/') . enkrip($field->id_pinjaman) . '" class="btn  bg-info"><i class="fas fa-eye"></i> </a>';
+
             $no++;
             $row = array();
             $row[] = $no;
@@ -321,6 +323,7 @@ class Transaksi extends CI_Controller
             $row[] = 'IDR. ' . rupiah($field->jlh_pinjam);
             $row[] = $field->nama_anggota;
             $row[] = 'IDR. ' .  rupiah($field->angsuran);
+            $row[] = $agunan;
             $row[] = $field->status;
 
             // $row[] = '&nbsp;' . $detail;
@@ -331,6 +334,156 @@ class Transaksi extends CI_Controller
             "draw" => $_POST['draw'],
             "recordsTotal" => $this->model_view_pinjaman->count_all($where),
             "recordsFiltered" => $this->model_view_pinjaman->count_filtered($where),
+            "data" => $record,
+        );
+        //output dalam format JSON
+        echo json_encode($output);
+    }
+
+    function agunan($seo = '')
+    {
+
+        $data = $this->data;
+        $data['sub_title'] = 'Agunan';
+        $data['title'] = 'Form Tambah Data Agunan';
+        $data['link'] = 'transaksi/pinjam';
+        $data['post'] = 'referensi/promotion/' . $seo;
+
+
+        if (bisaBaca($data['link'], $data['id_level'])) {
+            if (isset($_POST['tambah'])) {
+                if (!empty($_FILES['gambar']['name'])) {
+
+                    $config['upload_path'] = 'assets/img/uploads/';
+                    $config['allowed_types'] = '*';
+                    $config['max_size'] = '1000'; // kb
+
+                    $this->load->library('upload', $config);
+
+                    if ($this->upload->do_upload('gambar')) {
+                        $image_banner = $this->upload->data();
+
+                        $simpan = array(
+                            'id_group_category' => postnumber('id_category'),
+                            'name_promotion' => posttext('name_promotion'),
+                            'link' => posttext('link'),
+                            'date_start' => posttext('date_start'),
+                            'date_end' => posttext('date_end'),
+                            'promotion_code' => posttext('promotion_code'),
+                            'image_promotion' => $image_banner['file_name']
+                        );
+                        $this->model_app->insert('promotion', $simpan);
+                        $this->session->set_flashdata('sukses', 'Data Berhasil Berhasil Disimpan');
+                    } else {
+                        $this->session->set_flashdata('gagal', 'Foto Gagal Di Upload');
+                    }
+                } else {
+                    $this->session->set_flashdata('gagal', 'Foto Gagal Di Upload: File Foto Kosong');
+                }
+
+                redirect($data['post']);
+            } else if (isset($_POST['edit'])) {
+                if (bisaUbah($data['link'], $data['id_level'])) {
+                    $where = array('id_promotion ' => postnumber('id'));
+
+                    $simpan = array(
+                        'id_pinjaman' => postnumber('id_pinjaman'),
+                        'promotion_code' => posttext('promotion_code')
+                    );
+                    if ($this->model_app->update('promotion', $simpan, $where)) {
+
+
+
+                        if (!empty($_FILES['gambar']['name'])) {
+                            $config['upload_path'] = 'assets/img/uploads/';
+                            $config['allowed_types'] = '*';
+                            $config['max_size'] = '1000'; // kb
+                            $this->load->library('upload', $config);
+                            $this->upload->do_upload('gambar');
+                            $hasil = $this->upload->data();
+
+                            if (!$hasil['file_name'] == '') {
+                                $info = $this->model_app->edit('categories', $where)->row_array();
+                                $oldImage = $info['image_categories'];
+                                unlink($config['upload_path']  . $oldImage);
+
+                                $update = array(
+                                    'image_categories' => $hasil['file_name']
+                                );
+
+
+                                $where = array('id_category' => postnumber('id'));
+                                $this->model_app->update('categories', $update, $where);
+
+                                $this->session->set_flashdata('sukses', 'Data Category Berhasil Berhasil Disimpan');
+                            } else {
+                                $this->session->set_flashdata('gagal', 'Data Category Berhasil Disimpan Tapi Foto Gagal Di Upload');
+                            }
+                        } else {
+                            $this->session->set_flashdata('sukses', 'Data Category Berhasil Disimpan dan Anda Tidak Mengganti Foto');
+                        }
+
+                        $this->session->set_flashdata('sukses', 'Data Category Group Berhasil Disimpan');
+                    } else {
+                        $this->session->set_flashdata('gagal', 'Data Album Foto Gagal Disimpan');
+                    }
+                    redirect($data['post']);
+                }
+            } else {
+                $row = $this->model_app->edit('view_pinjaman', array('id_pinjaman' => dekrip($seo)))->row_array();
+                if ($row != null) {
+                    $data['title'] = 'Agunan Peminjaman ' . stripcslashes($row['nama_anggota']);
+                } else {
+                    $data['title'] = 'Agunan';
+                }
+                $data['id'] = $row['no_pinjaman'];
+                $this->template->load('admin', 'admin/transaksi/pinjam/agunan', $data);
+            }
+        } else {
+            redirect('dashboard');
+        }
+    }
+
+    function get_agunan($id)
+    {
+        $data = $this->data;
+        $this->load->model('model_agunan');
+        $data['link'] = 'referensi/categories';
+        $where = array('id_pinjaman' => $id);
+        $list = $this->model_agunan->get_datatables($where);
+        $no = $_POST['start'];
+        $record = array();
+        foreach ($list as $field) {
+
+            $edit = '';
+            if (bisaUbah($data['link'], $data['id_level'])) {
+                $edit = aksiModalEdit('#modalEdit', $field->id_agunan, '');
+            }
+
+            $hapus = '';
+            if (bisaHapus($data['link'], $data['id_level'])) {
+                $hapus = aksiHapusSwal('referensi/promotionhapus', enkrip($field->id_agunan), '');
+            }
+
+            // $image = '<img width="50" height="50" src="' . base_url('assets/img/uploads/' . $field->image_promotion) . '" alt="">';
+
+            $no++;
+            $row = array();
+            $row[] = $no;
+
+            $row[] = stripcslashes($field->nama_agunan);
+            $row[] = '$image';
+
+            $row[] = $edit . '&nbsp;' . $hapus;
+
+
+            $record[] = $row;
+        }
+
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->model_agunan->count_all($where),
+            "recordsFiltered" => $this->model_agunan->count_filtered($where),
             "data" => $record,
         );
         //output dalam format JSON

@@ -33,7 +33,7 @@
 
                   <div class="form-group">
                     <label class="control-label">Nomor Anggota</label>
-                    <?= formInputNumber('no_anggota', '', 'Nomor Anggota', 'required') ?>
+                    <?= formInputText('no_anggota', $nomor_anggota, 'Nomor Anggota', 'required') ?>
                   </div>
 
                   <div class="form-group">

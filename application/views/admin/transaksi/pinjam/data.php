@@ -43,6 +43,7 @@
                       <th>Jumlah Pinjaman</th>
                       <th>Nama Anggota</th>
                       <th>Angsuran</th>
+                      <th>Agunan</th>
                       <th>Status</th>
                       <!-- <th>Aksi</th> -->
                     </tr>
