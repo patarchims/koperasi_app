@@ -4,7 +4,7 @@ class Model_agunan extends CI_Model
 {
 
     var $table = 'agunan'; //nama tabel dari database
-    var $column_order = array(null, 'nama_agunan', null); //field yang ada di table user
+    var $column_order = array('nama_agunan'); //field yang ada di table user
     var $column_search = array('nama_agunan'); //field yang diizin untuk pencarian 
     var $order = array('id_agunan' => 'desc'); // default order 
 

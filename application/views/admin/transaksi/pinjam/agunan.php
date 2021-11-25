@@ -47,7 +47,6 @@
                                 </tbody>
                             </table>
                         </div>
-                        <!-- /.card-body -->
                     </div>
 
                 </div>
@@ -63,57 +62,30 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Form Tambah Promotion</h4>
+                    <h4 class="modal-title">Form Tambah Agunan</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                     <form class="form-horizontal" action="<?= base_url($post) ?>" enctype="multipart/form-data" method="POST">
-                        <input type="hidden" name="id_category" value="<?= $id_group_category ?>">
+                        <input type="hidden" name="id" value="<?= $id ?>">
                         <div class="modal-body">
 
                             <div class="form-group row">
-                                <label class="control-label col-sm-3">Name Promotion</label>
+                                <label class="control-label col-sm-3">Nama Agunan</label>
                                 <div class="col-sm-9">
-                                    <?= formInputText('name_promotion', '', 'Name Promotion', 'required') ?>
+                                    <?= formInputText('nama_agunan', '', 'Nama Agunan', 'required') ?>
                                 </div>
                             </div>
 
                             <div class="form-group row">
-                                <label class="control-label col-sm-3">Image Promotion</label>
+                                <label class="control-label col-sm-3">Agunan</label>
                                 <div class="col-sm-9">
                                     <?= formInputGambar('gambar', 'required') ?>
                                 </div>
                             </div>
 
-                            <div class="form-group row">
-                                <label class="control-label col-sm-3">Link</label>
-                                <div class="col-sm-9">
-                                    <?= formInputText('link', '', 'Link', 'required') ?>
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label class="control-label col-sm-3">Date Start</label>
-                                <div class="col-sm-9">
-                                    <?= formInputDate('date_start', '', 'Date Start', 'required') ?>
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label class="control-label col-sm-3">Date End</label>
-                                <div class="col-sm-9">
-                                    <?= formInputDate('date_end', '', 'Date End', 'required') ?>
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <label class="control-label col-sm-3">Promotion Code</label>
-                                <div class="col-sm-9">
-                                    <?= formInputText('promotion_code', '', 'Promotion Code', 'required') ?>
-                                </div>
-                            </div>
 
                         </div>
                         <div class="modal-footer">
@@ -128,7 +100,30 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
-    <!-- /.modal -->
+
+
+    <div class="modal fade" id="modalEdit">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Form Edit Agunan</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                </div>
+                <form class="form-horizontal" action="<?= $post ?>" enctype="multipart/form-data" method="POST">
+                    <div class="modal-body">
+                        <div class="fetched-data"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary pull-left" data-dismiss="modal">Tutup</button>
+                        <button type="submit" name="edit" class="btn btn-success">Simpan</button>
+                    </div>
+                </form>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
 
 
     <script>
@@ -180,11 +175,11 @@
 
 
                 "columnDefs": [{
-                        "targets": [0, 5, 6],
+                        "targets": [0, 2, 3],
                         "orderable": false,
                     },
                     {
-                        "targets": [6],
+                        "targets": [3],
                         "className": 'text-nowrap',
                     }
                 ],

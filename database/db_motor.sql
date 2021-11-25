@@ -17,6 +17,21 @@
 CREATE DATABASE IF NOT EXISTS `db_motor` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `db_motor`;
 
+-- Dumping structure for table db_motor.agunan
+CREATE TABLE IF NOT EXISTS `agunan` (
+  `id_agunan` int(11) NOT NULL AUTO_INCREMENT,
+  `id_pinjaman` int(11) NOT NULL DEFAULT '0',
+  `nama_agunan` varchar(500) DEFAULT NULL,
+  `agunan` varchar(225) DEFAULT NULL,
+  PRIMARY KEY (`id_agunan`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+-- Dumping data for table db_motor.agunan: ~0 rows (approximately)
+/*!40000 ALTER TABLE `agunan` DISABLE KEYS */;
+INSERT INTO `agunan` (`id_agunan`, `id_pinjaman`, `nama_agunan`, `agunan`) VALUES
+	(4, 4, 'Surat Tanah', 'molto_molto_pewangi_sport_fresh_-780_ml-__full04_nkocudhp.jpeg');
+/*!40000 ALTER TABLE `agunan` ENABLE KEYS */;
+
 -- Dumping structure for table db_motor.config_menu
 CREATE TABLE IF NOT EXISTS `config_menu` (
   `id_menu` int(11) NOT NULL AUTO_INCREMENT,
@@ -68,7 +83,7 @@ CREATE TABLE IF NOT EXISTS `identitas` (
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
--- Dumping data for table db_motor.identitas: ~1 rows (approximately)
+-- Dumping data for table db_motor.identitas: ~0 rows (approximately)
 /*!40000 ALTER TABLE `identitas` DISABLE KEYS */;
 INSERT INTO `identitas` (`id`, `kode`, `tingkat`, `instansi`, `nama`, `alamat`, `kota`, `telp`, `web`, `email`, `logo`, `wa`, `fb`, `tw`, `api`, `yt`, `footer`, `deskripsi`, `keyword`, `about`, `uid`, `pa4`, `la4`, `lf4`, `nomor_surat`) VALUES
 	(1, '10260901', 'SMP', 'KOPERASI ', 'KOPERASI PUMASARI', 'Kota Pematangsiantar, <br> Sumatera Utara', 'Batu Bara', '-', '-', 'admin@gmail.com', 'koperasi.png', '', 'https://www.facebook.com/-', 'https://twitter.com/-', 'https://disdik.batubarakab.go.id/', 'https://www.youtube.com/-', 'copyright @ 2021 - | -', '', '', '<p style="text-align:justify"><span style="color:#000000"><span style="font-size:14px"><strong>SIMPEL BOS</strong>&nbsp;(Sistem Informasi Pelaporan Dana BOS) adalah aplikasi&nbsp; berbasis web yang dirancang untuk membantu sekolah dalam menyusun dan mengelola laporan keuangan tingkat sekolah.&nbsp; Aplikasi ini&nbsp; dikembangkan atas salah satu program Dinas Pendidikan Kabupaten Labuhanbatu Selatan. Aplikasi ini bermanfaat untuk memudahkan sekolah dalam penyusunan format laporan keuangan yang ada dalam Petunjuk Pelaksanaan program BOS. Salah satu hasil akhir dari aplikasi ini adalah format BOS yang selanjutnya digunakan untuk diisikan di Laporan Penggunaan Dana BOS secara online. Aplikasi ini disertai dengan pedoman penggunaannya sehingga setiap sekolah dapat belajar mandiri.</span></span></p>\r\n\r\n<p style="text-align:justify"><span style="color:#000000"><span style="font-size:14px">Untuk melihat Peraturan Terbaru klik <strong><a href="http://bos-labusel.indosistem.com/web/peraturan">Disini</a>.</strong></span></span></p>\r\n\r\n<p style="text-align:justify"><span style="color:#000000"><span style="font-size:14px">Untuk melihat Berita Terbaru klik <a href="http://bos-labusel.indosistem.com/web/berita"><strong>Disini.</strong></a></span></span></p>\r\n\r\n<p style="text-align:justify">&nbsp;</p>\r\n', 'obATxEkk9b9RVAqJHV2uA1mAuAdaFTYN', '', '', '', '');
@@ -436,7 +451,7 @@ INSERT INTO `tbrefb` (`id`, `idxref`, `kderef`, `nmaref1`, `nmaref2`, `nmaref3`,
 -- Dumping structure for table db_motor.tb_anggota
 CREATE TABLE IF NOT EXISTS `tb_anggota` (
   `id_anggota` int(11) NOT NULL AUTO_INCREMENT,
-  `no_anggota` int(11) NOT NULL DEFAULT '0',
+  `no_anggota` varchar(50) NOT NULL DEFAULT '0',
   `nama_anggota` varchar(255) NOT NULL DEFAULT '0',
   `jenis_kelamin` enum('Laki-laki','Perempuan') NOT NULL,
   `tempat_lahir` varchar(225) DEFAULT NULL,
@@ -448,13 +463,14 @@ CREATE TABLE IF NOT EXISTS `tb_anggota` (
   `telp` varchar(13) DEFAULT NULL,
   `no_identitas` int(11) DEFAULT NULL,
   `tgl_daftar` date DEFAULT NULL,
-  PRIMARY KEY (`id_anggota`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+  PRIMARY KEY (`id_anggota`),
+  UNIQUE KEY `no_anggota` (`no_anggota`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
--- Dumping data for table db_motor.tb_anggota: ~1 rows (approximately)
+-- Dumping data for table db_motor.tb_anggota: ~0 rows (approximately)
 /*!40000 ALTER TABLE `tb_anggota` DISABLE KEYS */;
 INSERT INTO `tb_anggota` (`id_anggota`, `no_anggota`, `nama_anggota`, `jenis_kelamin`, `tempat_lahir`, `tgl_lahir`, `alamat`, `pekerjaan`, `agama`, `email`, `telp`, `no_identitas`, `tgl_daftar`) VALUES
-	(1, 44121, 'Ida Samosir', 'Perempuan', 'Samosir', '2021-11-05', 'JL. BERINGIN - TANJUNG GADING, PERK. SIPAREPARE', 'Programmer', 'H', 'dosterpeter@ymail.com', '0854', 2424, '2021-11-05');
+	(2, 'A-20211109133120', 'Ida Samosir', 'Laki-laki', 'Samosir', '2021-11-09', 'JL. BERINGIN - TANJUNG GADING, PERK. SIPAREPARE', 'Programmer', 'H', 'admin@gmail.com', '4534343', 12313573, '2021-11-09');
 /*!40000 ALTER TABLE `tb_anggota` ENABLE KEYS */;
 
 -- Dumping structure for table db_motor.tb_angsuran
@@ -473,7 +489,7 @@ CREATE TABLE IF NOT EXISTS `tb_angsuran` (
   PRIMARY KEY (`id_angsuran`)
 ) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=latin1;
 
--- Dumping data for table db_motor.tb_angsuran: ~1 rows (approximately)
+-- Dumping data for table db_motor.tb_angsuran: ~0 rows (approximately)
 /*!40000 ALTER TABLE `tb_angsuran` DISABLE KEYS */;
 INSERT INTO `tb_angsuran` (`id_angsuran`, `no_pinjaman`, `no_angsuran`, `id_anggota`, `denda`, `angsuran_ke`, `keterangan`, `tanggal`, `jlh_bayar`, `tgl_jatuh_tempo`, `hari_telat`) VALUES
 	(26, 'P-20211108142802', 'AG- 20211109122816', 1, 0, 1, '', '2021-11-09', 1250000, '2021-11-08', 0);
@@ -496,12 +512,13 @@ CREATE TABLE IF NOT EXISTS `tb_pinjaman` (
   `sisa_tenor` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id_pinjaman`),
   UNIQUE KEY `no_pinjaman` (`no_pinjaman`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
--- Dumping data for table db_motor.tb_pinjaman: ~1 rows (approximately)
+-- Dumping data for table db_motor.tb_pinjaman: ~2 rows (approximately)
 /*!40000 ALTER TABLE `tb_pinjaman` DISABLE KEYS */;
 INSERT INTO `tb_pinjaman` (`id_pinjaman`, `id_anggota`, `no_pinjaman`, `jlh_pinjam`, `bunga`, `tenor`, `administrasi`, `keterangan`, `tgl_pinjam`, `status`, `angsuran`, `total`, `sisa_tenor`) VALUES
-	(3, 1, 'P-20211108142802', 150000000, 10, 12, 15000, 'OK', '2021-10-08', 'Open', 1250000, 15000000, 11);
+	(3, 1, 'P-20211108142802', 150000000, 10, 12, 15000, 'OK', '2021-10-08', 'Open', 1250000, 15000000, 11),
+	(4, 2, 'P-20211109135851', 50000000, 10, 12, 15000, 'OK', '2021-11-09', 'Open', 416667, 5000000, 12);
 /*!40000 ALTER TABLE `tb_pinjaman` ENABLE KEYS */;
 
 -- Dumping structure for table db_motor.user
@@ -545,7 +562,7 @@ CREATE TABLE `view_angsuran` (
 	`jlh_bayar` INT(11) NULL,
 	`tgl_jatuh_tempo` DATE NULL,
 	`hari_telat` INT(11) NULL,
-	`no_anggota` INT(11) NOT NULL,
+	`no_anggota` VARCHAR(50) NOT NULL COLLATE 'latin1_swedish_ci',
 	`nama_anggota` VARCHAR(255) NOT NULL COLLATE 'latin1_swedish_ci',
 	`jenis_kelamin` ENUM('Laki-laki','Perempuan') NOT NULL COLLATE 'latin1_swedish_ci',
 	`tempat_lahir` VARCHAR(225) NULL COLLATE 'latin1_swedish_ci',
@@ -605,7 +622,7 @@ CREATE TABLE `view_pinjaman` (
 	`total` INT(11) NULL,
 	`sisa_tenor` INT(11) NOT NULL,
 	`nama_anggota` VARCHAR(255) NOT NULL COLLATE 'latin1_swedish_ci',
-	`no_anggota` INT(11) NOT NULL
+	`no_anggota` VARCHAR(50) NOT NULL COLLATE 'latin1_swedish_ci'
 ) ENGINE=MyISAM;
 
 -- Dumping structure for view db_motor.view_angsuran

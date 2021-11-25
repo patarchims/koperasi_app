@@ -190,8 +190,6 @@ class Transaksi extends CI_Controller
                 $this->template->load('admin', 'admin/transaksi/angsuran/angsuran-dana-notfound', $data);
             } else if ($data['result']['status'] == 'Open') {
                 $data['angsuran_ke'] = hitungAngsuran($data['result']['no_pinjaman']);
-
-
                 // Cari Tanggal Jatuh Tempo
                 $pinjaman = $data['no_pinjaman'];
                 $data['tgl_jatuh_tempo'] =  tglJatuhTempo($data['result']['tgl_pinjam'], $pinjaman);
@@ -312,7 +310,6 @@ class Transaksi extends CI_Controller
         $record = array();
         foreach ($list as $field) {
 
-
             $agunan = '<a href="' . base_url('transaksi/agunan/') . enkrip($field->id_pinjaman) . '" class="btn  bg-info"><i class="fas fa-eye"></i> </a>';
 
             $no++;
@@ -347,7 +344,7 @@ class Transaksi extends CI_Controller
         $data['sub_title'] = 'Agunan';
         $data['title'] = 'Form Tambah Data Agunan';
         $data['link'] = 'transaksi/pinjam';
-        $data['post'] = 'referensi/promotion/' . $seo;
+        $data['post'] = 'transaksi/agunan/' . $seo;
 
 
         if (bisaBaca($data['link'], $data['id_level'])) {
@@ -364,15 +361,11 @@ class Transaksi extends CI_Controller
                         $image_banner = $this->upload->data();
 
                         $simpan = array(
-                            'id_group_category' => postnumber('id_category'),
-                            'name_promotion' => posttext('name_promotion'),
-                            'link' => posttext('link'),
-                            'date_start' => posttext('date_start'),
-                            'date_end' => posttext('date_end'),
-                            'promotion_code' => posttext('promotion_code'),
-                            'image_promotion' => $image_banner['file_name']
+                            'id_pinjaman' => postnumber('id'),
+                            'nama_agunan' => posttext('nama_agunan'),
+                            'agunan' => $image_banner['file_name']
                         );
-                        $this->model_app->insert('promotion', $simpan);
+                        $this->model_app->insert('agunan', $simpan);
                         $this->session->set_flashdata('sukses', 'Data Berhasil Berhasil Disimpan');
                     } else {
                         $this->session->set_flashdata('gagal', 'Foto Gagal Di Upload');
@@ -436,7 +429,7 @@ class Transaksi extends CI_Controller
                 } else {
                     $data['title'] = 'Agunan';
                 }
-                $data['id'] = $row['no_pinjaman'];
+                $data['id'] = dekrip($seo);
                 $this->template->load('admin', 'admin/transaksi/pinjam/agunan', $data);
             }
         } else {
@@ -448,33 +441,35 @@ class Transaksi extends CI_Controller
     {
         $data = $this->data;
         $this->load->model('model_agunan');
-        $data['link'] = 'referensi/categories';
+        $data['link'] = 'transaksi/pinjam';
         $where = array('id_pinjaman' => $id);
         $list = $this->model_agunan->get_datatables($where);
         $no = $_POST['start'];
         $record = array();
         foreach ($list as $field) {
 
+
+            $hapus = '';
+            if (bisaHapus($data['link'], $data['id_level'])) {
+                $hapus = aksiHapusSwal('transaksi/agunanhapus', enkrip($field->id_agunan), '');
+            }
+
+
             $edit = '';
             if (bisaUbah($data['link'], $data['id_level'])) {
                 $edit = aksiModalEdit('#modalEdit', $field->id_agunan, '');
             }
 
-            $hapus = '';
-            if (bisaHapus($data['link'], $data['id_level'])) {
-                $hapus = aksiHapusSwal('referensi/promotionhapus', enkrip($field->id_agunan), '');
-            }
-
-            // $image = '<img width="50" height="50" src="' . base_url('assets/img/uploads/' . $field->image_promotion) . '" alt="">';
+            $image = aksiDetail('assets/img/uploads', $field->agunan);
 
             $no++;
             $row = array();
             $row[] = $no;
 
             $row[] = stripcslashes($field->nama_agunan);
-            $row[] = '$image';
+            $row[] = $image;
 
-            $row[] = $edit . '&nbsp;' . $hapus;
+            $row[] =  $hapus;
 
 
             $record[] = $row;
@@ -488,5 +483,32 @@ class Transaksi extends CI_Controller
         );
         //output dalam format JSON
         echo json_encode($output);
+    }
+
+    function agunanhapus($seo = '')
+    {
+        $data = $this->data;
+        $data['title'] = 'Hapus Agunan';
+        $data['link'] = 'transaksi/pinjam';
+
+        if (bisaHapus($data['link'], $data['id_level'])) {
+            $where = array('id_agunan' => dekrip($seo));
+            $info = $this->model_app->edit('agunan', $where)->row_array();
+            $this->model_app->delete('agunan', $where);
+
+            if ($this->db->affected_rows() > 0) {
+                if ($info['agunan'] != '') {
+                    $config['upload_path'] = 'assets/img/uploads/';
+                    unlink($config['upload_path']  . $info['agunan']);
+                }
+                $hasil = array('hasil' => 'sukses', 'pesan' => 'Data Promotion Berhasil Dihapus');
+            } else {
+                $hasil = array('hasil' => 'gagal', 'pesan' => 'Data Promotion Gagal Dihapus');
+            }
+            // redirect($data['link']);
+            echo json_encode($hasil);
+        } else {
+            redirect('dashboard');
+        }
     }
 } //controller
